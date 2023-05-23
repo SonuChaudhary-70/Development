@@ -1,0 +1,8 @@
+By using querySelectorAll() 
+
+we can change item of html collection by its index number 
+If we want apply a specific style to all element of html collection we have use for loop to go through all the elements
+Ex - for (let ele of items) {
+    ele.style.fontWeight = 'bold'
+    ele.style.border = '2px solid black'
+}
