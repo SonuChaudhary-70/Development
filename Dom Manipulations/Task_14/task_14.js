@@ -15,42 +15,50 @@ function submitData(event) {
         Date: date.value,
         Time: time.value
     }
-    // store data in local storage
-    let stringifiedObj = JSON.stringify(detail);
-    localStorage.setItem(detail['Email'], stringifiedObj)
+    if (detail['Username'] == '' || detail['Email'] == '' || detail['Date'] == '' || detail['Time'] == '') {
+        errorMsg()
+        setTimeout(() =>{
+            let errorMsg = document.getElementById('error')
+            errorMsg.remove()
+        },3000)
+    } else {
+        // store data in local storage
+        let stringifiedObj = JSON.stringify(detail);
+        localStorage.setItem(detail['Email'], stringifiedObj)
 
-    // Create div element
-    let newDiv = document.createElement('div');
+        // Create div element
+        let newDiv = document.createElement('div');
 
-    // Create li element
-    let li = document.createElement('li');
+        // Create li element
+        let li = document.createElement('li');
 
-    // create textNode for li content
-    let text = document.createTextNode(`${detail['Username']} - ${detail['Email']} - ${detail['Date']} - ${detail['Time']}`);
-    li.appendChild(text);
+        // create textNode for li content
+        let text = document.createTextNode(`${detail['Username']} - ${detail['Email']} - ${detail['Date']} - ${detail['Time']}`);
+        li.appendChild(text);
 
-    // create delete button
-    let deleteBtn = document.createElement('button');
-    deleteBtn.className = 'btn btn-danger btn-sm ms-2 delete ';
-    deleteBtn.innerHTML = 'Delete';
-    deleteBtn.onclick = deleteData
+        // create delete button
+        let deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn btn-danger btn-sm ms-2 delete ';
+        deleteBtn.innerHTML = 'Delete';
+        deleteBtn.onclick = deleteData
 
-    // create edit button 
-    let edit = document.createElement('button')
-    edit.className = 'btn btn-success btn-sm ms-4 edit ';
-    edit.innerHTML = 'Edit';
-    edit.onclick = editData
+        // create edit button 
+        let edit = document.createElement('button')
+        edit.className = 'btn btn-success btn-sm ms-4 edit ';
+        edit.innerHTML = 'Edit';
+        edit.onclick = editData
 
-    // append li to div
-    newDiv.appendChild(li)
-    newDiv.appendChild(edit);
-    newDiv.appendChild(deleteBtn);
-    newDiv.className = 'd-flex mt-2 flex-sm-wrap'
-    newDiv.setAttribute('id', `${email.value}`)
+        // append li to div
+        newDiv.appendChild(li)
+        newDiv.appendChild(edit);
+        newDiv.appendChild(deleteBtn);
+        newDiv.className = 'd-flex mt-2 flex-sm-wrap'
+        newDiv.setAttribute('id', `${email.value}`)
 
-    // append newDiv to ul
-    let usersList = document.querySelector('#users')
-    usersList.appendChild(newDiv)
+        // append newDiv to ul
+        let usersList = document.querySelector('#users')
+        usersList.appendChild(newDiv)
+    }
 }
 
 
@@ -98,7 +106,16 @@ function editData(e) {
     localStorage.setItem(detail['Email'], stringifiedObj)
 }
 
+function errorMsg() {
+    let div = document.getElementById('error')
+    div.className = 'd-flex text-light border border-2 bg-danger'
 
+    let p = document.createElement('p')
+    p.className = 'd-flex pt-2 ps-2 h5'
+    p.textContent = 'Error :- All fields are required'
+    p.style.fontFamily = 'Trebuchet MS'
+    div.appendChild(p)
+}
 // function editData(e) {
 //     e.preventDefault()
 //     // delete data from local storage - so get key to delete from content of li
