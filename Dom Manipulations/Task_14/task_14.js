@@ -20,7 +20,7 @@ function submitData(event) {
         setTimeout(() =>{
             let errorMsg = document.getElementById('error')
             errorMsg.remove()
-        },3000)
+        },1000)
     } else {
         // store data in local storage
         let stringifiedObj = JSON.stringify(detail);
@@ -58,6 +58,10 @@ function submitData(event) {
         // append newDiv to ul
         let usersList = document.querySelector('#users')
         usersList.appendChild(newDiv)
+        
+        // make output visible
+        let output = document.getElementById('output')
+        output.style.display = 'inline'
     }
 }
 
