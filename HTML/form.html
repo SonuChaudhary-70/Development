@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form in Html</title>
+</head>
+<body>
+    <h4>Registration Form</h4>
+    <form action="#" method="post" target="_self" autocomplete="on" >
+        <label for="username" id="user">UserName</label><br>
+        <input type="text" name="Sonu" id="username"><br>
+        <label for="useremail" id="email">Email</label><br>
+        <input type="email" name="email" id="useremail"><br><br>
+        <b>Select Your Class</b><br>
+        <label for="XI">Class XI</label>
+        <input type="radio" id="XI" value="class XI" name="classes">
+        <label for="XII">Class XII</label>
+        <input type="radio" id="XII" value="class XII" name="classes">
+        <br><br>
+        <b>Select Your Fav Sub</b><br>
+        <input type="checkbox" id="Maths">
+        <label for="Maths">Maths</label><br>
+        <input type="checkbox" id="Physics">
+        <label for="Physics">Physics</label><br>
+        <input type="checkbox" id="Chemistry">
+        <label for="Chemistry">Chemistry</label><br>
+        <input type="checkbox" id="English">
+        <label for="English">English</label><br>
+        <input type="checkbox" id="CS">
+        <label for="CS">CS</label>
+        <br><br>
+        <b>Select Your City</b>
+        <select name="City" id="">
+            <option value="Ghaziabad">Ghaziabad</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Pune">Pune</option>
+            <option value="Haryana">Haryana</option>
+        </select><br><br>
+        <textarea name="Feedback" id="feed" cols="30" rows="10" placeholder="Please Enter Feedback"></textarea>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
