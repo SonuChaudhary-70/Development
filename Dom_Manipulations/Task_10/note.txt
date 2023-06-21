@@ -1,0 +1,8 @@
+Topics
+1.localStorage
+2. sessionStorage
+3. CookiesStorage
+
+localStorage.getItems()
+localStorage.setItem()
+localStorage.removeItem()
