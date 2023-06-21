@@ -1,0 +1,13 @@
+/* *{
+    margin-top: 0px !important;
+    padding: 0px !important;
+} */
+
+label{
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+#add{
+    width: 100%;
+}
