@@ -1,0 +1,8 @@
+Tips to Debug JS Code easily 
+
+1. Always Use labels in console.log() 
+2. If a data has tons of objects in it use console.table(data,['propertyName']) to see specific fields of all objects in a data.
+3. If we want to see value of specific variable in data and that data has millions of variable the use search bar of chrome debugger/inspect in console section
+4. console.time()
+5. Use debugger inside js files by just writing debugger at end of the file. By this we can use in inspect of chrome.
+6. To find specific js file in inspect section then go to inspect -> sources -> press ctrl + p -> type .js extension then all js files will appear there and we call lookout our file
