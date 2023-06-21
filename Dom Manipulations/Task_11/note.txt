@@ -1,4 +1,0 @@
-Topics
-
-1. JSON.stringify() is used to convert a JS object literal into a JSON string.
-2. JSON.parse()  is used to convert JSON string to a JavaScript object literal
