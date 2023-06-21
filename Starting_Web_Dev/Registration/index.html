@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Registration Form</title>
+
+</head>
+
+<body style="display: flex; justify-content: center;">
+    <div id="box">
+        <div class="book">
+            <h3 style="font-size: 1.5rem">Book a Call</h3>
+            <p>Book a Demo session and we will call within 1hr of selected time</p>
+        </div>
+        <hr style="border: 1px solid gray; margin:0rem 10px;">
+        <form id="form" onsubmit="takeValues(event)" method="post" action="#">
+            <label for="name">Name:</label>
+            <input type="text" id="username">
+            <label for="email">Email:</label>
+            <input type="email" id="email">
+            <label for="phone">Phone:</label>
+            <input type="" id="phone">
+            <label for="time">Select time for Call</label>
+            <div class="select">
+                <input type="date" style="width: 23.8rem;" id="date">
+                <input type="time" style="width: 23.8rem;" id="time">
+            </div>
+            <input type="submit" value="Get a Call" id="callback">
+        </form>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
