@@ -24,9 +24,8 @@ function add(event) {
         errorMsg()
         setTimeout(() => {
             let err = document.getElementById('error')
-            err.classList.remove('d-flex')
-            // errorMsg.remove()
-            err.style.display = 'none'
+            err.className = ''
+            err.firstChild.remove()
         }, 1000)
     }
     else {
