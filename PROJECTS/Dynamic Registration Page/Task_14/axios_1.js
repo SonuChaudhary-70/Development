@@ -133,9 +133,9 @@ async function cancel() {
     catch (error) {
         show_error(error);
     }
-    if(true){
-        source.cancel('Request Canceled')
-    }
+    // if(true){
+    //     source.cancel('Request Canceled')
+    // }
 }
 
 // Axios Instances
