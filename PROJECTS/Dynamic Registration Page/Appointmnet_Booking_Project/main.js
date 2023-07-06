@@ -22,13 +22,22 @@ function submitData(event) {
         Time: time.value
     }
 
-    if (detail['Username'] == '' || detail['Email'] == '' || detail['Date'] == '' || detail['Time'] == '' || password.value == '' ) {
+    if (detail['Username'] == '' || detail['Email'] == '' || detail['Date'] == '' || detail['Time'] == '' || password.value == '') {
         errorMsg()
         setTimeout(() => {
-            let errorMsg = document.getElementById('error')
-            errorMsg.remove()
-        }, 1000)
+            let err = document.getElementById('error')
+            err.className = ''
+            err.firstChild.remove()
+        }, 1500)
+    } else if (isDuplicateAppointment()) {
+        duplicateError()
+        setTimeout(() => {
+            let err = document.getElementById('error')
+            err.className = ''
+            err.firstChild.remove() 
+        },1500)
     } else {
+
         // store data in local storage
         let stringifiedObj = JSON.stringify(detail);
         localStorage.setItem(detail['Email'], stringifiedObj)
@@ -61,7 +70,7 @@ function submitData(event) {
         newDiv.appendChild(deleteBtn);
         newDiv.className = 'd-flex mt-2 flex-sm-wrap'
         newDiv.setAttribute('id', `${email.value}`)
-        
+
         // append newDiv to ul
         let usersList = document.querySelector('#users')
         usersList.appendChild(newDiv)
@@ -121,20 +130,23 @@ function saveData(e) {
         console.log('empty');
         errorMsg()
         setTimeout(() => {
-            let errorMsg = document.getElementById('error')
-            errorMsg.remove()
+            let err = document.getElementById('error')
+            err.className = ''
+            err.firstChild.remove()
         }, 1000)
     } else {
-        let newText = `${detail['Username']} - ${detail['Email']} - ${detail['Date']} - ${detail['Time']}`
-        oldText.textContent = newText
-
-        // Update new data in local storage
         let detail = {
             Username: username.value,
             Email: email.value,
             Date: date.value,
             Time: time.value
         }
+
+        // Update new data in output window
+        let newText = `${detail['Username']} - ${detail['Email']} - ${detail['Date']} - ${detail['Time']}`
+        oldText.textContent = newText
+
+        // Update new data in local storage
         let stringifiedObj = JSON.stringify(detail);
         localStorage.setItem(detail['Email'], stringifiedObj)
     }
@@ -142,11 +154,27 @@ function saveData(e) {
 
 function errorMsg() {
     let div = document.getElementById('error')
-    div.className = 'd-flex text-light border border-2 bg-danger'
+    div.className = 'd-flex text-light border border-2 rounded bg-danger mb-1'
 
     let p = document.createElement('p')
     p.className = 'd-flex pt-2 ps-2 h5'
     p.textContent = 'Error :- All fields are required'
     p.style.fontFamily = 'Trebuchet MS'
     div.appendChild(p)
+}
+
+function isDuplicateAppointment() {
+    let email = document.getElementById("email").value;
+    let localStorageExistingData = JSON.parse(localStorage.getItem(email))
+    return (localStorageExistingData != null && localStorageExistingData['Email'] == email)
+}
+
+function duplicateError(){
+    let form = document.getElementById('error')
+    form.className = 'd-flex text-light border mt-1 rounded border-2 bg-danger'
+    let p = document.createElement('p')
+    p.className = 'd-flex pt-2 ps-2 h5'
+    p.textContent = 'Expense with this Email Id Already Exist !!!'
+    p.style.fontFamily = 'Trebuchet MS'
+    form.appendChild(p)
 }
