@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="main.css">
     <title>Registration Responsive</title>
 </head>
 
@@ -17,37 +18,37 @@
     <!-- <div class="main"> -->
     <div class="container">
         <div class="row d-flex justify-content-center  mt-5">
-            <div class="box col-md-8 border border-2 border-dark rounded-3 w-50 bg-light">
+            <div class="box col-md-8 border border-2 border-dark rounded-3 w-50 ">
                 <div class="heading d-flex flex-column align-items-center">
-                    <h3 class="tittle mt-4 text-info">Book A Call</h3>
+                    <h3 class="tittle mt-4 text-dark">Book A Call</h3>
                     <p class="mb-0">Book a Demo session and we will call within 1hr of selected time</p>
                 </div>
                 <hr class="horizontal">
                 <span id="error" style="display:none"></span>
                 <div class="form-group ">
-                    <label for="name">Name</label>
+                    <label for="name" class="fw-bold mb-1">Name</label>
                     <input type="text" class="form-control" id="name" placeholder="Enter Name">
                 </div>
-                <div class="form-group">
-                    <label for="email" class="mt-1">Email</label>
+                <div class="form-group mt-3">
+                    <label for="email" class="fw-bold mb-1">Email</label>
                     <input type="email" class="form-control" id="email" placeholder="Enter email">
                 </div>
-                <div class="form-group">
-                    <label for="password" class="mt-1">Password</label>
+                <div class="form-group mt-3">
+                    <label for="password" class="fw-bold mb-1">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Enter Password">
                 </div>
-                <div class="date-time d-flex flex-wrap justify-content-between mt-2">
+                <div class="date-time d-flex flex-wrap justify-content-between mt-3">
                     <div class="form-group w-50">
-                        <label for="date">Select Date</label>
+                        <label for="date" class="fw-bold mb-1">Select Date</label>
                         <input type="date" class="form-control me-2" id="date">
                     </div>
                     <div class="form-group  w-50">
-                        <label for="time" class="ms-2">Select Time</label>
+                        <label for="time" class="ms-2 fw-bold mb-1">Select Time</label>
                         <input type="time" class="form-control" id="time">
                     </div>
                 </div>
                 <button type="button" id="get_a_call"
-                    class="btn btn-outline-info d-grid gap-2 col-6 mx-auto my-3 w-100">Get A
+                    class="btn btn-dark d-grid gap-2 col-6 mx-auto my-3 w-100 fw-bold">Get A
                     Call</button>
                 <div id="output" style="display: none">
                     <h2>User Details</h2>
