@@ -23,8 +23,10 @@ function add(event) {
     } else if (amount.value == '' || description.value == '' || category.value == '') {
         errorMsg()
         setTimeout(() => {
-            let errorMsg = document.getElementById('error')
-            errorMsg.remove()
+            let err = document.getElementById('error')
+            err.classList.remove('d-flex')
+            // errorMsg.remove()
+            err.style.display = 'none'
         }, 1000)
     }
     else {
