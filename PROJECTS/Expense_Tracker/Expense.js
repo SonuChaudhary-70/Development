@@ -142,7 +142,7 @@ function deleteData(e) {
 
 function errorMsg() {
     let div = document.getElementById('error')
-    div.className = 'd-flex text-light border border-2 bg-danger'
+    div.className = 'd-flex text-light border border-2 mt-1 rounded bg-danger'
 
     let p = document.createElement('p')
     p.className = 'd-flex pt-2 ps-2 h5'
@@ -160,7 +160,7 @@ function isExpensePresent() {
 function duplicateError() {
     let form = document.getElementById('error')
     let newSpan = document.createElement('span')
-    newSpan.className = 'd-flex text-light border border-2 bg-warning'
+    newSpan.className = 'd-flex text-light border mt-1 rounded border-2 bg-warning'
     let p = document.createElement('p')
     p.className = 'd-flex pt-2 ps-2 h5'
     p.textContent = 'This Expense Already Exist !!!'
