@@ -1,4 +1,4 @@
-
+// console.log(axios);
 // add event on add expense
 let add_expense = document.querySelector('#add')
 add_expense.addEventListener('click', add)
@@ -14,7 +14,7 @@ let category = document.getElementById('expense-category')
 function add(event) {
     event.preventDefault()
 
-    if (isExpensePresent()) {
+    if (isDuplicateExpense()) {
         duplicateError()
         setTimeout(() => {
             const secondChild = document.querySelector('#form :nth-child(2)');
@@ -95,7 +95,6 @@ function editData(e) {
         e.target.innerHTML = 'Save'
     } else {
         saveData(e)
-        // e.target.addEventListener('click', saveData)
     }
 }
 
@@ -104,11 +103,11 @@ function saveData(e) {
     e.target.innerHTML = 'Edit'
 
     if (amount.value == '' || description.value == '' || category.value == '') {
-        console.log('empty');
         errorMsg()
         setTimeout(() => {
-            let errorMsg = document.getElementById('error')
-            errorMsg.remove()
+            let err = document.getElementById('error')
+            err.className = ''
+            err.firstChild.remove()
         }, 1000)
     } else {
         // update new data in output
@@ -128,16 +127,24 @@ function saveData(e) {
 }
 
 function deleteData(e) {
-    // delete div Element which contains li element and delete button
+
+    // delete div Element of output window which contains li element and delete button
     e.target.parentNode.remove()
-    if (output.children.length <= 0) {
-        output.style.display = 'none'
-    }
+
+    // get all input tags and clear them
+    let inputData = document.getElementsByClassName('inp')
+    inputData['amount'].value = ''
+    inputData['description'].value = ''
+    inputData['expense-category'].value = ''
 
     // delete data from local storage - so get the key to delete from content of list
     let text = e.target.parentElement.firstChild.textContent.split('-')
     let key = text[2].trim()
     localStorage.removeItem(key)
+
+    if (output.children.length <= 0) {
+        output.style.display = 'none'
+    }
 }
 
 function errorMsg() {
@@ -151,7 +158,7 @@ function errorMsg() {
     div.appendChild(p)
 }
 
-function isExpensePresent() {
+function isDuplicateExpense() {
     let localStorageData = localStorage.getItem(`${category.value}`)
     let parsedData = JSON.parse(localStorageData)
     return (parsedData != null && (amount.value == parsedData['Expense_Amount'] && description.value == parsedData['Description'] && category.value == parsedData['Category']))
