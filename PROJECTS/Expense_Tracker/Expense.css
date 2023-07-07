@@ -1,7 +1,8 @@
-/* *{
-    margin-top: 0px !important;
-    padding: 0px !important;
-} */
+body{
+    background-image:url('exp2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;    
+}
 
 label{
     font-size: 1.3rem;
@@ -10,4 +11,9 @@ label{
 
 #add{
     width: 100%;
+}
+
+.main{
+    background-color: rgb(187, 127, 205)!important;
+    opacity: 0.85;
 }
