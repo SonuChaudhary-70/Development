@@ -1,0 +1,14 @@
+body{
+    background-image: url('appoint.jpg');
+    background-size: cover;
+    opacity: 0.90;
+}
+
+.box{
+    background-color:rgb( 148, 173, 255);
+}
+
+label,#get_a_call{
+    font-size: 18px;
+    letter-spacing: 1px;
+}
