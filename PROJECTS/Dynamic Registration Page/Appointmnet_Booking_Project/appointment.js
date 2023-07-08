@@ -1,31 +1,56 @@
+// GLOBAL INSTANCES
+let baseUrl = 'https://crudcrud.com/api/a01de57d2e09493ea91c9c58cab58563/bookingData'
+
+function getInputs() {
+    // Get Inputs ( Global Instance )
+    let username = document.getElementById("name");
+    let email = document.getElementById("email");
+    let date = document.getElementById("date");
+    let time = document.getElementById("time");
+
+    // Make User Detail Object to save in database ( Global Instance )
+    let detail = {
+        Username: username.value,
+        Email: email.value,
+        Date: date.value,
+        Time: time.value
+    }
+    return detail
+}
+
 let get_a_call = document.getElementById('get_a_call')
-// get_a_call.addEventListener('submit', submitData)
 get_a_call.addEventListener('click', submitData)
 
-window.addEventListener('load',function(){
-    let keys = Object.keys(localStorage)
-    for( let item of keys ){
-        let data = JSON.parse(localStorage.getItem(item))
-        showOutput(data)
-    }
-})
+// window.addEventListener('DOMContentLoaded', async function () {
+//     try {
+//         let response = await axios.get(baseUrl)
+//         for (let item of response.data) {
+//             showOutput(item._id, item)
+//         }
+//     } catch (err) {
+//         console.log(err.message);
+//     }
+// }
+// )
 
-function submitData(event) {
-    event.preventDefault();
-        // Get Inputs
-        let username = document.getElementById("name");
-        let email = document.getElementById("email");
-        let date = document.getElementById("date");
-        let time = document.getElementById("time");
-    
-        // Make User Detail Object to save in local storage
-        let detail = {
-            Username: username.value,
-            Email: email.value,
-            Date: date.value,
-            Time: time.value
-        }
+window.addEventListener('DOMContentLoaded', function () {
+    axios.get(baseUrl)
+        .then((response) => {
+            for (let item of response.data) {
+                showOutput(item._id, item)
+            }
+        })
+        .catch((err) => {
+            console.log(`Error fetching data ${err.message}`)
+        })
+}
+)
 
+async function submitData(event) {
+    event.preventDefault()
+
+    // call getInputs function to get the details of the user
+    let detail = getInputs()
     if (detail['Username'] == '' || detail['Email'] == '' || detail['Date'] == '' || detail['Time'] == '' || password.value == '') {
         errorMsg()
         setTimeout(() => {
@@ -33,91 +58,99 @@ function submitData(event) {
             err.className = ''
             err.firstChild.remove()
         }, 1500)
-    } else if (isDuplicateAppointment()) {
+    } else if (await isDuplicateAppointment()) {
         duplicateError()
         setTimeout(() => {
             let err = document.getElementById('error')
             err.className = ''
-            err.firstChild.remove() 
-        },1500)
+            err.firstChild.remove()
+        }, 3000)
     } else {
-
-        // store data in local storage
-        let stringifiedObj = JSON.stringify(detail);
-        localStorage.setItem(detail['Email'], stringifiedObj)
-
-        showOutput(detail)
+        try {
+            let response = await axios.post(baseUrl, detail)
+            showOutput(response._id, detail)
+        }
+        catch (error) {
+            console.log(error.message);
+        }
     }
 }
 
+async function deleteData(e) {
+    let userList = document.getElementById('users')
+    let output = document.getElementById('output')
+    try {
+        // delete div Element which contains li element and delete button
+        e.target.parentNode.remove()
 
-function deleteData(e) {
-    // delete div Element which contains li element and delete button
-    e.target.parentNode.remove()
+        // get inputs and clear them 
+        let inputData = document.getElementsByClassName('form-control')
+        inputData[0].value = ''
+        for( let i = 0; i < inputData.length; i++ ){
+            inputData[i].value = ''
+        }
 
-    // delete data from local storage - so get key to delete from content of li
-    let text = e.target.parentElement.firstChild.textContent.split('-')
-    let key = text[1].trim()
-    localStorage.removeItem(key)
+        // delete data from database - so get data id to delete
+        axios.delete(`${baseUrl}/${e.target.id}`)
+
+        if (userList.children.length <= 0) {
+            output.style.display = 'none'
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
 }
 
-function editData(e) {
+async function editData(e) {
     e.preventDefault()
     if (e.target.innerHTML == 'Edit') {
-        // focus on first input elements
-        document.getElementById('name').focus()
+        try {
+            // focus on first input elements
+            document.getElementById('name').focus()
 
-        // delete old data from local storage - so get a key to delete from content of li and also change button text from Edit to Save
-        let text = e.target.parentElement.firstChild.textContent.split('-')
-        let key = text[1].trim()
-        localStorage.removeItem(key)
-        e.target.innerHTML = 'Save'
+            // delete old database - so get a data id to delete and also change button text from Edit to Save
+            await axios.delete(`${baseUrl}/${e.target.id}`)
 
-        // target input element and clear them
-        let inputData = document.getElementsByTagName('input')
-        inputData[0].value = ''
-        inputData[1].value = ''
-        inputData[2].value = ''
-        inputData[3].value = ''
-        inputData[4].value = ''
+            // target input element and clear them
+            let inputData = document.getElementsByTagName('input')
+            for( let i = 0; i < inputData.length; i++ ){
+                inputData[i].value = ''
+            }
+            e.target.innerHTML = 'Save'
+        } catch (err) {
+            console.log(err.message);
+        }
     } else {
         saveData(e)
     }
 }
 
-function saveData(e) {
-    let oldText = e.target.parentElement.firstChild
+async function saveData(e) {
+    let oldData = e.target.parentElement.firstChild
     e.target.innerHTML = 'Edit'
 
-    // update content from local storage
-    let username = document.getElementById("name");
-    let email = document.getElementById("email");
-    let date = document.getElementById("date");
-    let time = document.getElementById("time");
+    // get input to update data
+    let detail = getInputs()
+    let password = document.getElementById("password");
 
-    if (username.value == '' || email.value == '' || date.value == '' || time.value == '') {
-        console.log('empty');
+    if (detail['Username'] == '' || detail['Email'] == '' || detail['Date'] == '' || detail['Time'] == '' || password.value == '') {
         errorMsg()
         setTimeout(() => {
             let err = document.getElementById('error')
             err.className = ''
             err.firstChild.remove()
-        }, 1000)
+        }, 3000)
     } else {
-        let detail = {
-            Username: username.value,
-            Email: email.value,
-            Date: date.value,
-            Time: time.value
-        }
-
         // Update new data in output window
-        let newText = `${detail['Username']} - ${detail['Email']} - ${detail['Date']} - ${detail['Time']}`
-        oldText.textContent = newText
+        let newData = `${detail['Username']} - ${detail['Email']} - ${detail['Date']} - ${detail['Time']}`
+        oldData.textContent = newData
 
-        // Update new data in local storage
-        let stringifiedObj = JSON.stringify(detail);
-        localStorage.setItem(detail['Email'], stringifiedObj)
+        // Update new data in database
+        try {
+            await axios.post(`${baseUrl}`, detail)
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 }
 
@@ -132,14 +165,25 @@ function errorMsg() {
     div.appendChild(p)
 }
 
-function isDuplicateAppointment() {
-    let email = document.getElementById("email").value;
-    let localStorageExistingData = JSON.parse(localStorage.getItem(email))
-    console.log(localStorageExistingData);
-    return (localStorageExistingData != null && localStorageExistingData['Email'] == email)
+async function isDuplicateAppointment() {
+    // Get Input
+    let detail = getInputs()
+    let result = false
+    try {
+        let response = await axios.get(baseUrl)
+        for (let item of response.data) {
+            if (item.Username == detail.Username && item.Email == detail.Email) {
+                result = true;
+                break
+            }
+        }
+        return result
+    } catch (err) {
+        console.log(err.message);
+    }
 }
 
-function duplicateError(){
+function duplicateError() {
     let form = document.getElementById('error')
     form.className = 'd-flex text-light border mt-1 rounded border-2 bg-danger'
     let p = document.createElement('p')
@@ -149,8 +193,7 @@ function duplicateError(){
     form.appendChild(p)
 }
 
-
-function showOutput(detail) {
+function showOutput(data_id, detail) {
 
     // Create div element
     let newDiv = document.createElement('div');
@@ -166,17 +209,19 @@ function showOutput(detail) {
     let deleteBtn = document.createElement('button');
     deleteBtn.className = 'btn btn-danger btn-sm ms-2 delete ';
     deleteBtn.innerHTML = 'Delete';
+    deleteBtn.id = data_id
     deleteBtn.onclick = deleteData
 
     // create edit button 
-    let edit = document.createElement('button')
-    edit.className = 'btn btn-success btn-sm ms-4 edit ';
-    edit.innerHTML = 'Edit';
-    edit.onclick = editData
+    let editBtn = document.createElement('button')
+    editBtn.className = 'btn btn-success btn-sm ms-4 edit ';
+    editBtn.innerHTML = 'Edit';
+    editBtn.id = data_id
+    editBtn.onclick = editData
 
     // append li to div
     newDiv.appendChild(li)
-    newDiv.appendChild(edit);
+    newDiv.appendChild(editBtn);
     newDiv.appendChild(deleteBtn);
     newDiv.className = 'd-flex mt-2 flex-sm-wrap border border-2 border-dark rounded p-1'
     newDiv.setAttribute('id', `${email.value}`)
