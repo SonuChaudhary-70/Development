@@ -51,3 +51,16 @@ function showOutput() {
     let output = document.getElementById('output')
     output.style.display = 'inline'
 }
+
+
+// window.addEventListener('DOMContentLoaded', async function () {
+//     try {
+//         let response = await axios.get(baseUrl)
+//         for (let item of response.data) {
+//             showOutput(item._id, item)
+//         }
+//     } catch (err) {
+//         console.log(err.message);
+//     }
+// }
+// )
