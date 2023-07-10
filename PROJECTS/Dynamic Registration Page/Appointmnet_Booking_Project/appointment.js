@@ -1,5 +1,5 @@
 // GLOBAL INSTANCES
-let baseUrl = 'https://crudcrud.com/api/a01de57d2e09493ea91c9c58cab58563/bookingData'
+let baseUrl = 'https://crudcrud.com/api/cae2f788621349659a463960a1e68efa/bookingData'
 
 function getInputs() {
     // Get Inputs ( Global Instance )
@@ -21,17 +21,6 @@ function getInputs() {
 let get_a_call = document.getElementById('get_a_call')
 get_a_call.addEventListener('click', submitData)
 
-// window.addEventListener('DOMContentLoaded', async function () {
-//     try {
-//         let response = await axios.get(baseUrl)
-//         for (let item of response.data) {
-//             showOutput(item._id, item)
-//         }
-//     } catch (err) {
-//         console.log(err.message);
-//     }
-// }
-// )
 
 window.addEventListener('DOMContentLoaded', function () {
     axios.get(baseUrl)
@@ -57,7 +46,7 @@ async function submitData(event) {
             let err = document.getElementById('error')
             err.className = ''
             err.firstChild.remove()
-        }, 1500)
+        }, 3000)
     } else if (await isDuplicateAppointment()) {
         duplicateError()
         setTimeout(() => {
