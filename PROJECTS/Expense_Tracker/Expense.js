@@ -15,14 +15,14 @@ window.addEventListener('load', function () {
 
 // add event on add expense
 let add_expense = document.querySelector('#add')
-add_expense.addEventListener('click', add)
+add_expense.addEventListener('click', addExpense)
 
 // get inputs
 let amount = document.getElementById('amount')
 let description = document.getElementById('description')
 let category = document.getElementById('expense-category')
 
-async function add(event) {
+async function addExpense(event) {
     event.preventDefault()
 
     if (await isDuplicateExpense()) {
