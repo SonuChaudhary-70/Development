@@ -1,0 +1,15 @@
+{
+  "name": "group-chat",
+  "version": "1.0.0",
+  "description": "'It is basic group chatting app where you can send messages to your friends and family'",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon app.js"
+  },
+  "author": "sonu_chaudhary",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
