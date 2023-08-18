@@ -26,10 +26,13 @@ function requestHandler(req, res) {
             });
         });
     }
+
+    let result
     fs.readFile('message.txt', 'utf8', function (err, data) {
         if (err) {
             return console.log(err);
         }
+        result = data
         res.setHeader('Content-Type', 'text/html');
         res.write('<html>')
         res.write('<head><title>Server</title></head>')
@@ -37,6 +40,7 @@ function requestHandler(req, res) {
         res.write('</html>')
         res.end()
     });
+    console.log(result);
 }
 
 module.exports = requestHandler;
