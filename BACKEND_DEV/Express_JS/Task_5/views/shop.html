@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
-    <style>
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Shop</title>
+    <!-- <style>
         body{
             margin: 0;
             padding:0;
         }
         .main-header{
-            background-color: rgb(52, 226, 226);
+            background-color: rgb(145, 30, 245);
             height: 3.5rem;
             border: 1px solid black;
-        }
-        .main-header-nav{
             display: flex;
-            align-content: center;
-            border: 2px solid black;
-            background-color:white
+            align-items: center;
         }
         .main-header-list{
             list-style: none;
             margin: 0;
             padding: 0;
             display: flex;
+            align-items: center;
         }
         .main-header-list-item a{
             text-decoration: none;
+            margin:0 1rem;
+            color:black;
+            font-size: 20px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
         }
-    </style>
+        .main-header-list-item a.active, a:hover{
+            color:white
+        }
+        main{
+            margin: 2rem 8rem;
+        }
+    </style> -->
 </head>
 <body>
     <header class="main-header">
         <nav class="main-header-nav">
             <ul class="main-header-list">
-                <li class="main-header-list-item"><a href="/add-product">Add Product</a></li>
-                <li class="main-header-list-item"><a href="/shop">Shop</a></li>
+                <li class="main-header-list-item"><a href="/admin/add-product">Add Product</a></li>
+                <li class="main-header-list-item"><a href="/shop" class="active">Shop</a></li>
             </ul>
         </nav>
     </header>

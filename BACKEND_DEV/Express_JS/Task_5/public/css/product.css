@@ -1,0 +1,28 @@
+
+input {
+    height: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0px 5px;
+    border: 2px solid rgb(145, 30, 245);
+    border-radius: 5px;
+    width: 100%;
+}
+button {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    height: 2rem;
+    width: 8rem;
+    border-radius: 5px;
+}
+button:hover,
+button:active {
+    background-color: rgb(145, 30, 245);
+    color:white
+}
+form{
+    width:20rem
+}
+p{
+    margin:0;
+}

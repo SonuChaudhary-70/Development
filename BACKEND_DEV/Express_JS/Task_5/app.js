@@ -6,7 +6,9 @@ const shopRoutes = require('./routes/shop.js');
 const path = require('path');
 const rootDir = require('./utility_funcs/path')
 
-app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // admin routes - get all products, add new products
 app.use('/admin',adminRoutes)
@@ -18,4 +20,4 @@ app.use(shopRoutes)
 app.use((req, res,next) => {
     res.status(404).sendFile(path.join(rootDir,'views','pageNotFound.html'))
 })
-app.listen(8080);
+app.listen(7048);

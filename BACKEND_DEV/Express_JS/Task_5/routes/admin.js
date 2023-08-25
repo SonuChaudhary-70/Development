@@ -9,8 +9,6 @@ router.get('/add-product', (req, res, next) => {
 
 router.post('/products', (req, res, next) => {
     let data = req.body
-    console.log('product :',data.title)
-    console.log('quantity :',data.quantity);
     res.redirect('/shop')
 })
 
