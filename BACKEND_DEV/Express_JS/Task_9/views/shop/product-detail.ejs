@@ -1,0 +1,50 @@
+<%- include('../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <main class="centered">
+                <h1>
+                    <%= product.title %>
+                </h1>
+                <hr>
+                <div>
+                    <img src="<%= product.imageUrl%>" alt="<%= product.title %>" width="350rem" height="350rem">
+                </div>
+                <h2>
+                    <%= product.price %>
+                </h2>
+                <p>
+                    <%= product.description %>
+                </p> 
+                <%- include('../includes/add-to-cart.ejs',{product:product}) %>
+            </main>
+            <%- include('../includes/end.ejs') %>
+
+
+
+
+
+
+
+
+
+                <!-- 
+        <table style="width:100%">
+            <tr>
+                <th>Id:</th>
+                <td><%= product.id %></td>
+            </tr>
+            <tr>
+                <th>Tittle:</th>
+                <td><%= product.title %></td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td><%= product.description %></td>
+            </tr>
+            <tr>
+                <th>Price:</th>
+                <td><%= product.price %></td>
+            </tr>
+        </table> -->
