@@ -1,4 +1,3 @@
-const mysql = require('mysql2');
 
 
 // // Create the connection pool. The pool-specific settings are the defaults
@@ -13,9 +12,9 @@ const mysql = require('mysql2');
 
 // New Connection with help of Sequelize Constructor
 const Sequelize = require("sequelize")
-const sequelize = new Sequelize('product_list','root','root',{
-    host:"localhost",
-    dialect:'mysql'
+const sequelize = new Sequelize('test_db','root','SIDc78',{
+    dialect:'mysql',
+    host:"localhost"
 });
 
 module.exports = sequelize;

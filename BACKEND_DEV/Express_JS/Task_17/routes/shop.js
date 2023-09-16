@@ -12,6 +12,9 @@ router.get('/products', shopController.getProducts);
 
 router.get('/products/:productId', shopController.getProductById);
 
+// find product by its primary key
+// router.get('/products/:productId', shopController.getProductByPk);
+
 router.get('/cart', shopController.getCart);
 
 router.post('/cart', shopController.postCart);

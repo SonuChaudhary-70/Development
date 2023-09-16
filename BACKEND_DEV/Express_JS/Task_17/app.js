@@ -24,10 +24,10 @@ app.use(errorController.get404);
 
 sequelize.sync()
     .then(result => {
-        console.log(result)
+        // console.log(result)
+        app.listen(7048);
     })
     .catch(err => {
         console.log(err);
     })
 
-app.listen(7048);

@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = require('../util/DB_Connection')
 
-const Product = sequelize.define('product',{
+const Product = sequelize.define('product_list',{
   id:{
     type:Sequelize.INTEGER,
     autoIncrement : true ,
@@ -16,10 +16,12 @@ const Product = sequelize.define('product',{
   price:{
     type:Sequelize.DOUBLE,
     allowNull :false,
+    unique :true
   },
   imageUrl:{
     type:Sequelize.STRING,
-    allowNull:false
+    allowNull:false,
+    unique :true
   },
   description:{
     type:Sequelize.STRING,
