@@ -1,4 +1,4 @@
-const Product = require('../models/product');
+const Product = require('../models/sequelizeProductModel');
 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
@@ -11,7 +11,6 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
   const imageUrl = req.body.imageUrl;
-  console.log('image url :', imageUrl);
   const price = req.body.price;
   const description = req.body.description;
   Product.create({
