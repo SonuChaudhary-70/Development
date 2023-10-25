@@ -1,0 +1,39 @@
+
+body{
+    /* height:500px !important; */
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+
+}
+
+.box{
+    border:2px solid black;
+    border-radius: 20px;
+    height:700px;
+    width:480px;
+    color: white !important;
+    /* background-color:rgb(19, 18, 18); */
+}
+
+div input,button{
+    /* display: flex; */
+    /* justify-content:center; */
+    /* align-items: center; */
+    width:400px !important;
+    margin:0px 38px;
+}
+
+.sign-in-options a{
+    color:white;
+}
+
+.btn{
+    width:200px !important;
+    font-size:1.5rem !important;
+    letter-spacing:1px;
+}
+
+/* button[type="button"]{
+    width:50px !important;
+    color:black;
+    background-color:aqua
+} */
