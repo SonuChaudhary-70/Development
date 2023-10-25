@@ -1,12 +1,11 @@
 // Global Instances
 // sample image link - https://picsum.photos/
-let baseUrl = 'http://localhost:7048'
 
-window.addEventListener('DOMContentLoaded', async () => {
-    let response = await axios.get('http://localhost:7048/post/')
+window.addEventListener('DOMContentLoaded', async (event) => {
+    let getPost = await axios.get('http://localhost:7048/post/')
     try {
-            response.data.forEach((post) => {
-            displayPost(post);
+        getPost.data.forEach((post) => {
+            displayPost(post, post.id);
         })
     }
     catch (error) {
@@ -25,7 +24,7 @@ function getPostInputs() {
     return { link: link.value, description: description.value }
 }
 
-function addPost(event) {
+async function addPost(event) {
     event.preventDefault();
     let data = getPostInputs()
 
@@ -33,21 +32,28 @@ function addPost(event) {
     if (data.link == '' || data.description == '') {
         alert("Please fill all fields");
     } else {
-        // add post in database
-        axios.post('http://localhost:7048/post/add-post', data)
-        displayPost(data);
+        try {
+            // add post in database
+            let response = await axios.post('http://localhost:7048/post/add-post', data)
+            displayPost(data, response.data.id);
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
 }
 
-function displayPost(postData) {
+function displayPost(postData, postId) {
     let postOutput = document.getElementById('post-content')
     // get data from backend to check if at least one post is stored or not
     // if stored then make the output visible else leave it hidden by changing its class name
     let btn = document.getElementById('post')
-    btn.className = 'flex';
+    if (!(postData == '' || postData == null)){
+        btn.className = 'd-flex';
+    }
 
-    // make output window
+    // CREATE UI TO DISPLAY POST
     // create img tag and set its attributes
     let img = document.createElement('img')
     img.src = postData.link;
@@ -61,70 +67,101 @@ function displayPost(postData) {
     para.className = 'mt-2'
     para.innerText = 'User - ' + postData.description;
 
-    // create comment
+    // create comment tag
     let commentTag = document.createElement('p');
-    commentTag.id = 'commentTitle'
+    commentTag.id = postId
     commentTag.innerHTML = 'Comment';
     commentTag.style.cursor = 'pointer';
     commentTag.onclick = createComment
+    commentTag.addEventListener('click', (e) => {
+        showPreviousComment(e.target.id)
+    })
 
     // add all newly created tag to output window
     postOutput.appendChild(img);
     postOutput.appendChild(para);
     postOutput.appendChild(commentTag);
 }
-// to check if createComment event handler function is clicked or not
-let hasClicked = false;
 
 function createComment(e) {
-    if (!hasClicked) {
-        let postOutput = document.getElementById('post-content')
-        let commentInput = document.createElement('input');
-        commentInput.placeholder = 'Write a Comment';
-        commentInput.className = 'form-control rounded'
+    let createdCommentTag = document.getElementById(e.target.id)
+    let commentInput = document.createElement('input');
+    commentInput.placeholder = 'Write a Comment';
+    commentInput.className = 'form-control rounded'
 
-        let send = document.createElement('button');
-        send.type = 'button';
-        send.className = "ms-2 btn btn-light rounded";
-        send.textContent = 'Send';
-        send.onclick = displayComment
+    let send = document.createElement('button');
+    send.type = 'button';
+    send.className = "ms-2 btn btn-light rounded";
+    send.textContent = 'Send';
+    // to pass argument in event handlers we can use arrow function like below
+    send.addEventListener('click', () => { displayComment(e.target.id) })
 
-        let div = document.createElement('div');
-        div.className = "input-group mb-3 px-5";
-        div.id = 'comment'
-        div.appendChild(commentInput);
-        div.appendChild(send);
-        postOutput.appendChild(div);
-    }
-    // createComment function is executed hence we need to stop to create further create comment UI
-    hasClicked = true;
+    let div = document.createElement('div');
+    div.className = "input-group mb-3 px-5";
+    div.id = 'comment'
+    div.appendChild(commentInput);
+    div.appendChild(send);
+    createdCommentTag.after(div);
 }
 
-function displayComment(e) {
-    let comment = e.target.parentNode.children[0].value
+async function displayComment(id) {
+    let commentData = document.getElementById(id).nextSibling
 
-    // save comment in the dataBase at backend
-    axios.post('http://localhost:7048/comment/add-comment', { comment: comment });
+    // save comment in DB  at backend
+    axios.post('http://localhost:7048/comment/add-comment', { comment: commentData.firstChild.value, postId:id });
 
-    // get the element/tag after the will be displayed
-    let createComment = document.getElementById('comment')
-
-    // create paragraph for user which do comment on post
+    // create paragraph for USER which do comment on post
     let user = document.createElement("p")
     user.innerHTML = 'Anonymous -&nbsp'
     user.className = 'text-warning'
     user.style.wordWrap = 'keep-all'
 
-    // create paragraph for comment which user does
+    // create paragraph for COMMENT 
     let para = document.createElement('p');
     para.style.wordBreak = 'break-all'
-    para.innerHTML = comment;
+    para.innerHTML = commentData.firstChild.value;
 
     // now create div to add or align both user and its comment in a row
     let commentStr = document.createElement('div');
     commentStr.className = 'd-flex'
 
+    // now add user and comment in div
     commentStr.appendChild(user);
     commentStr.appendChild(para)
-    createComment.after(commentStr)
+
+    // append this newly created div with user and his comment into our comments section of posts
+    commentData.after(commentStr)
+}
+
+async function showPreviousComment(postId) {
+    let cmtTag = document.getElementById(postId).nextSibling
+
+    // fetch previous saved comment from database
+    const prevCmt = await axios.get(`http://localhost:7048/comment/${postId}`)
+
+    // display all previous comments
+    prevCmt.data.forEach((response) => {
+
+        // create paragraph for USER which do comment on post
+        let user = document.createElement("p")
+        user.innerHTML = 'Anonymous -&nbsp'
+        user.className = 'text-warning'
+        user.style.wordWrap = 'keep-all'
+
+        // create paragraph for COMMENT 
+        let cmt = document.createElement('p');
+        cmt.style.wordBreak = 'break-all'
+        cmt.innerHTML = response.comment;
+
+        // now create div to add or align both user and its comment in a row
+        let commentStr = document.createElement('div');
+        commentStr.className = 'd-flex'
+
+        // now add user and comment in div
+        commentStr.appendChild(user);
+        commentStr.appendChild(cmt);
+
+        // append this newly created div with user and his comment into our comments section of posts
+        cmtTag.after(commentStr)
+    })
 }
