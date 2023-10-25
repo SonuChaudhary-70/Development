@@ -10,7 +10,7 @@ exports.addPost = (req,res,next) => {
     })
     .then((response) => {
         console.log('Post created successfully');
-        // res.status(201).json({response})
+        res.status(201).json(response)
     })
     .catch((error) => {
         console.log("Error in adding a new post", error);
