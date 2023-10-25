@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=fire">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+
+    <style>
+        h2{
+            font-family: "Sofia", sans-serif;
+        }
+    </style>
+    <title>Social Media App</title>
+</head>
+
+<body>
+    <!-- Create Post Section Starts Here -->
+    <h2 class="text-center text-light mt-5">Create a New Post</h2>
+    <div class="container mt-3 d-flex">
+        <div class="row border bg-light border-3 d-lex m-auto rounded-3" id="main-continer">
+            <!-- <div class="box justify-content-center"> -->
+            <div class="col-12 my-2">
+                <form>
+                    <div class="mb-3">
+                        <label for="postLink" class="form-label h5">Post Link:</label>
+                        <input type="text" class="form-control border-2 border-dark" id="postLink"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label h5 ">Post Description</label>
+                        <textarea class="form-control border-2 border-dark" id="description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success my-3 background-success" id="create">Create
+                        Post</button>
+                </form>
+            </div>
+            <!-- </div> -->
+        </div>
+    </div>
+    <!-- Create Post Section Ends Here -->
+
+    <!-- Display Created Posts Starts Here-->
+    <h2 class="text-center text-light mt-5 ">Posts</h2>
+    <div class="container mt-3 d-none" style="display: none" id="post">
+        <div class="row bg-dark border-3 d-lex m-auto rounded-3 ">
+            <div class="col-12 my-2 d-flex align-items-center flex-column text-light p-3 m-0" id="post-content">
+            </div>
+        </div>
+    </div>
+    <!-- Display Created Posts Ends Here-->
+
+    <!-- JS File -->
+    <script src="./index.js"></script>
+</body>
+
+</html>
