@@ -14,6 +14,6 @@ app.use("/get", postRoutes);
 sequelize
   .sync()
   .then((result) => {
-    app.listen(7048);
+    app.listen(3001);
   })
   .catch((err) => console.log(err));
