@@ -18,6 +18,9 @@
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
 
+    <!-- axios CDN link -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Sign Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
@@ -26,20 +29,20 @@
     <div class="container-fluid vh-100">
         <div class="row d-flex align-center">
             <div class="col-12  d-flex justify-content-center py-4 align-items-center">
-                <div class="d-flex flex-column text-center box bg-dark text-light">
+                <form action="" class="d-flex flex-column text-center box bg-dark text-light" id="formData" method="POST">
                     <h1 class="mt-5 pt-4">LOGIN</h1>
 
                     <!-- Email Input -->
                     <p class="pt-3">Please enter your email and password</p>
                     <div class="form-outline form-white mb-4 pt-5">
-                        <input type="email" id="typeEmailX" class="form-control form-control-lg"
+                        <input type="email" id="email" class="form-control form-control-lg"
                             placeholder="Enter your email">
                         <!-- <label class="form-label" for="typeEmailX">Email</label> -->
                     </div>
 
                     <!-- Password Input -->
                     <div class="form-outline form-white mb-4">
-                        <input type="password" id="typeEmailX" class="form-control form-control-lg "
+                        <input type="password" id="password" class="form-control form-control-lg "
                             placeholder="Enter your password">
                         <!-- <label class="form-label" for="typeEmailX">Email</label> -->
                     </div>
@@ -49,7 +52,7 @@
 
                     <!-- Login button -->
                     <div class="login d-flex justify-content-center">
-                        <button type="button" class=" btn btn-outline-info mt-5">Login</button>
+                        <button type="submit" class=" btn btn-outline-info mt-2" id="login">Login</button>
                     </div>
 
                     <div class="sign-in-options my-4 d-flex justify-content-center">
@@ -60,14 +63,16 @@
 
                     <div class="sign-up">
                         <p>Don't have an account yet?</p>
-                        <a class='text-center h5' href="../SignUp/signUp.html"
-                            style="text-decoration:none">Sign up</a>
+                        <a class='text-center h5' href="../SignUp/signUp.html" style="text-decoration:none">Sign
+                            up</a>
                     </div>
 
-                </div>
+                </form>
             </div>
         </div>
     </div>
+
+    <script src="login.js"></script>
 </body>
 
 </html>
