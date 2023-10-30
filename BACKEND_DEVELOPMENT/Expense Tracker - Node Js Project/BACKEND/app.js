@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const signUpRoutes = require('./router/user');
+const userRoutes = require('./router/user');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const sequelize = require('./util/dbConfig')
@@ -10,10 +10,12 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // user routes for sign-up and login
-app.use('/user', signUpRoutes)
+app.use('/user', userRoutes)
 
 // server creation and connecting db with server
-sequelize.sync({ force: true })
+sequelize
+// .sync({ force: true })
+.sync()
     .then(() => {
         console.log('\nserver is listening on port : 4001');
         app.listen(4001)
