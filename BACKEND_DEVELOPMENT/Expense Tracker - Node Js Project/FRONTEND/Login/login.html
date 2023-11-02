@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="../Plugins/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -20,8 +20,7 @@
 
     <!-- axios CDN link -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <title>Sign Up</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Login</title>
 </head>
 
@@ -29,21 +28,28 @@
     <div class="container-fluid vh-100">
         <div class="row d-flex align-center">
             <div class="col-12  d-flex justify-content-center py-4 align-items-center">
-                <form action="" class="d-flex flex-column text-center box bg-dark text-light" id="formData" method="POST">
-                    <h1 class="mt-5 pt-4">LOGIN</h1>
+                <form action="" class="d-flex flex-column text-center box bg-dark text-light needs-validation"
+                    id="formData" method="POST" novalidate >
 
+                    <h1 class="mt-5 pt-3">LOGIN</h1>
                     <!-- Email Input -->
                     <p class="pt-3">Please enter your email and password</p>
-                    <div class="form-outline form-white mb-4 pt-5">
+                    <div class="d-flex flex-column align-items-center form-outline form-white mb-4 pt-3">
                         <input type="email" id="email" class="form-control form-control-lg"
-                            placeholder="Enter your email">
+                            placeholder="Enter your email" required>
+                        <div class="d-none border border-2 rounded-2 mt-1 px-3 text-start text-danger border-danger" style="width:400px"
+                            id="userNotExistErr">
+                        </div>
                         <!-- <label class="form-label" for="typeEmailX">Email</label> -->
                     </div>
 
                     <!-- Password Input -->
-                    <div class="form-outline form-white mb-4">
+                    <div class="d-flex flex-column align-items-center form-outline form-white mb-4">
                         <input type="password" id="password" class="form-control form-control-lg "
-                            placeholder="Enter your password">
+                            placeholder="Enter your password" required autocomplete="off">
+                        <div class="d-none border border-2 rounded-2 mt-1 px-3 text-start text-danger border-danger" style="width:400px"
+                            id="passErr">
+                        </div>
                         <!-- <label class="form-label" for="typeEmailX">Email</label> -->
                     </div>
 

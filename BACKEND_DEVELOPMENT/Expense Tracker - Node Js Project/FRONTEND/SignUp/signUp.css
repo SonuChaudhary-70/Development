@@ -1,6 +1,4 @@
 body{
-    width:99%;
-    /* padding:26px 0px; */
     background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
 }
 
@@ -8,7 +6,8 @@ body{
     width:28rem !important;
     /* height:700px !important; */
     border-radius: 35px;
-    /* margin:auto !important; */
+    /* margin:auto 0px !important; */
+    margin-top: auto !important;
     color: white !important;
 }
 

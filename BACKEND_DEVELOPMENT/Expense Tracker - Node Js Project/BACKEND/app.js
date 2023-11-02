@@ -18,7 +18,7 @@ sequelize
 .sync()
     .then(() => {
         console.log('\nserver is listening on port : 4001');
-        app.listen(4001)
+        app.listen(3001)
     })
     .catch(err => {
         console.log('Error while creating server', err);
