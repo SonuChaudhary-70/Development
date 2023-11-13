@@ -1,0 +1,22 @@
+body{
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+}
+
+.main{
+    width:28rem !important;
+    /* height:700px !important; */
+    border-radius: 35px;
+    /* margin:auto 0px !important; */
+    margin-top: auto !important;
+    color: white !important;
+}
+
+.inputs{
+    padding:0px 35px; 
+}
+
+.btn{
+    width:200px;
+    font-size:1.5rem !important;
+    letter-spacing:1px;
+}

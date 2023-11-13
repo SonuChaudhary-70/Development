@@ -1,0 +1,5 @@
+we use password hashing.
+-> Password hashing is turning a password into alphanumeric letters using specific algorithms. Hashing is beneficial when bad guys breach the data. With hashing, the data they get is in hash format, and hashed data is unintelligible.
+
+Bcrypt algorithm is based on Blowfish algorithm.
+
