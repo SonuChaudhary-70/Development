@@ -1,5 +1,7 @@
 const User = require('../model/user');
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const secret_Key = '8832d8ddb94a53d5fc43d7312597eef4f7f056b1ddb1dd416a0cb4171974b9fe9593dbf57dfdf53fe351cf74e0e01a3704efe90cd8bfe9639d9f68ef12312027'
 
 function isStringInvalid(string) {
     return !!(string == undefined || string.length === 0);
@@ -17,15 +19,14 @@ exports.login = async (req, res) => {
         if (!isValidUser) {
             return res.status(401).json({ success: false, message: 'Password not correct' })
         }
-        // res.redirect('/homePage')
-        return res.status(200).json({ success: true, message: "User logged in successfully", authorized: true })
+        return res.status(200).json({ success: true, message: "User logged in successfully", authorized: true, token: generateAccessToken(user.username, user.id, user.email) })
     }
     catch (error) {
         console.log('Error while login :', error);
     }
 }
 
-exports.signUp = async (req, res, next) => {
+exports.signUp = async (req, res) => {
     const { username, email, password } = req.body;
     const saltRounds = 10
     if (isStringInvalid(username) || isStringInvalid(email || isStringInvalid(password))) {
@@ -35,14 +36,14 @@ exports.signUp = async (req, res, next) => {
         // check if user exist with same email id or not
         let user = await User.findOne({ where: { email: email } });
         if (!user) {
-            let hashedPassword = await bcrypt.hash(password,saltRounds)
-                User.create({
-                    username: username,
-                    email: email,
-                    password: hashedPassword
-                });
-                if(!hashedPassword) throw new Error('Error while hashing password')
-                return res.status(200).json({ success: true, message: "User created successfully" })
+            let hashedPassword = await bcrypt.hash(password, saltRounds)
+            User.create({
+                username: username,
+                email: email,
+                password: hashedPassword
+            });
+            if (!hashedPassword) throw new Error('Error while hashing password')
+            return res.status(200).json({ success: true, message: "User created successfully" })
         } else {
             return res.status(409).json({ success: false, message: "Email already exists" });
         }
@@ -64,4 +65,8 @@ exports.isUserExist = async (req, res) => {
     catch (err) {
         console.log("Error in checking the user", err);
     }
+}
+
+function generateAccessToken(username, id, email) {
+    return jwt.sign({ userId: id, name: username, email: email }, secret_Key, { expiresIn: '365d' });
 }

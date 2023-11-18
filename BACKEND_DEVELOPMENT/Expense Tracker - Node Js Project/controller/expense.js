@@ -1,64 +1,73 @@
 const Expense = require('../model/expense')
 
-exports.addExpense = async (req, res, next) => {
-    const { Amount, Description, Category } = req.body;
-    // const user = req.user;
-    console.log(user);
-    const createdExp = await Expense.create({
+exports.addExpense = async (req, res) => {
+    const { Amount, Description, Category, date } = req.body;
+    const createdExp = await req.user.createExpense({
         amount: Amount,
         description: Description,
-        category: Category
+        category: Category,
+        date: date
     })
     try {
-        res.status(201).json({ success: true, expense: createdExp, message: 'expense created successfully' })
+        return res.status(201).json({ success: true, data: createdExp, message: 'expense created successfully' })
     }
     catch (err) {
         console.log('Error while adding expense in DB :', err);
-        res.json({ success: false, Error: err })
+        return res.json({ success: false, Error: err })
     }
 }
 
-exports.getAllExpenses = (req, res, next) => {
-    Expense.findAll().then(expenses => {
-        res.status(200).json(expenses)
-    }).catch(err => {
+exports.getAllExpenses = async (req, res) => {
+    try {
+        const expenses = await req.user.getExpenses();
+        return res.status(200).json({ success: true, data: expenses })
+    }
+    catch (err) {
         console.log('Error while fetching expenses from DB:', err);
-    })
+        return res.json({ success: false, Error: err })
+    }
 }
 
-exports.getExpenseById = (req, res, next) => {
-    let Id = req.params.id
-    Expense.findByPk(Id)
-        .then(expense => {
-            res.status(200).send(expense)
-        }).catch(err => {
-            console.log('Error while fetching expense from dataBase by id', err);
-        })
-}
-
-exports.updateExpense = (req, res, next) => {
-    console.log('update enter');
-    console.log(req.body);
+exports.getExpenseById = async (req, res) => {
     let Id = req.params.id;
-    let {Amount, Description,Category} = req.body;
-    // let Amount = req.body.Expense_Amount;
-    // let Description = req.body.Description;
-    // let Category = req.body.Category;
-
-    Expense.update({
-        amount: Amount,
-        description: Description,
-        category: Category
-    }, {
-        where: { id: Id }
-    })
+    try {
+        let expense = await req.user.getExpenses({ where: { id: Id } })
+        return res.status(200).json({ success: true, expense: expense })
+    }
+    catch (err) {
+        console.log('Error while fetching expense from dataBase by id', err);
+        return res.json({ success: false, Error: err });
+    }
 }
 
-exports.deleteExpense = (req, res, next) => {
+exports.updateExpense = async (req, res) => {
+    let Id = req.params.id;
+    let { Amount, Description, Category, date } = req.body;
+    try {
+        let updateExp = Expense.update({
+            amount: Amount,
+            description: Description,
+            category: Category,
+            date: date
+        }, {
+            where: { id: Id, UserId: req.user.id }
+        })
+        return res.status(200).json({ success: true, message: 'Expense updated successfully', updatedExpense: updateExp });
+    }
+    catch (err) {
+        console.log('Error while updating expense : ' + err);
+        return res.json({ success: false, Error: err });
+    }
+}
+
+exports.deleteExpense = async (req, res) => {
     let Id = req.params.id
-    Expense.destroy({ where: { id: Id } }).then(() => {
-        console.log(`Expense of id ${Id} is deleted successfully`);
-    }).catch((err) => {
-        console.log(err);
-    })
+    try {
+        let deletedExp = await Expense.destroy({ where: { id: Id, UserId: req.user.id } });
+        return res.status(200).json({ success: true, message: 'expense deleted successfully', deletedExp: deletedExp });
+    }
+    catch (err) {
+        console.log('Error while deleting expense : ', err.message);
+        return res.json({ success: false, Error: err })
+    }
 }

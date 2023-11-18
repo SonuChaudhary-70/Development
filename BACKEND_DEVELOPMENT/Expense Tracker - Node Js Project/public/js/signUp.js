@@ -33,7 +33,7 @@ let userExistErr = document.querySelector("#userExist");
 
 document.getElementById('formData')
     .addEventListener('submit', async (e) => {
-        // e.preventDefault()
+        e.preventDefault()
 
         // check typed password match or not
         if (inputs[2].value != inputs[3].value) {
@@ -51,7 +51,8 @@ document.getElementById('formData')
             try {
                 let response = await axios.post('http://localhost:8001/user/sign-up', userDetails);
                 if (response.status == 200) {
-                    alert('User created successfully')
+                    alert('User signed up successfully.\nNow please login with same credentials')
+                    window.location.href = 'http://localhost:8001/'
                 }
             }
             catch (err) {
@@ -74,10 +75,11 @@ document.getElementById('email')
             let response = await axios.post(`http://localhost:8001/user/${e.target.value}`);
             if (response.status == 200) {
                 inputs[1].style.backgroundImage = 'none'
-                showError(userExistErr,'User with this email already exists')
+                showError(userExistErr, 'User with this email already exists')
             }
         }
         catch (error) {
-            console.log('err :',error.response.data);
+            console.log('err :', error.response.data);
         }
     })
+

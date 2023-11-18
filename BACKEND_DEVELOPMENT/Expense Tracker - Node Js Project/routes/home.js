@@ -11,7 +11,7 @@ router.get('/signUp', (req, res) => {
 })
 
 router.get('/homePage', (req, res) => {
-    res.sendFile('homePage.html', { root: 'views'})
+    res.sendFile('home.html', { root: 'views'})
 });
 
 module.exports = router

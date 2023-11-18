@@ -19,9 +19,11 @@ loginForm.addEventListener('submit', async (e) => {
     } else {
         try {
             let response = await axios.post(`http://localhost:8001/user/login`, credentials);
-            if (response.status === 200) window.location.href = 'http://localhost:8001/homePage'
-            console.log('response :', response);
-            // alert('user logged in successfully')
+            if (response.status === 200) {
+                localStorage.setItem('token', JSON.stringify(response.data.token))
+                alert('user logged in successfully')
+                window.location.href = 'http://localhost:8001/homePage'
+            }
         }
         catch (err) {
             if (err.response.status == 404) {

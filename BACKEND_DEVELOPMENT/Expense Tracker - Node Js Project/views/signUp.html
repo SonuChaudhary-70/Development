@@ -19,13 +19,17 @@
     <!-- axios CDN link -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-        <!-- CSS Link -->
-        <link rel="stylesheet" href="/css/signUp.css">
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="/css/signUp.css">
 
     <title>Sign Up</title>
 </head>
 
-<body  style="background:#2575fc">
+<body style="background:#2575fc">  
+    <!-- <div class="alert alert-success" role="alert">
+        <p>User created successfully.</p>
+        <p>Now login with same credentials</p>
+    </div> -->
     <div class="conatiner-fluid d-flex justify-content-center align-items-center" style="height: 100vh">
         <div class="row d-flex justify-content-center py-5 ">
             <div class="d-flex  flex-column main border border-3 border-dark bg-dark">
@@ -57,7 +61,7 @@
 
                         <div class="form-outline mb-4 position-relative">
                             <input type="password" id="password" class="form-control form-control-lg border border-dark"
-                                placeholder='Create Your Password' required autocomplete="off"/>
+                                placeholder='Create Your Password' required autocomplete="off" />
                             <!-- <label class="form-label" for="password">Password</label> -->
                             <div class="invalid-tooltip">
                                 Please enter password.
@@ -75,11 +79,9 @@
                             <div class="invalid-tooltip">
                                 Please re-enter password.
                             </div>
-                            <div class="d-none invalid-tooltip"
-                                id="repeatPassErr">Password did not match
+                            <div class="d-none invalid-tooltip" id="repeatPassErr">Password did not match
                             </div>
                         </div>
-
                     </div>
                     <div class="register d-flex justify-content-center my-4">
                         <button type="submit" id="submitForm" class="btn btn-outline-info">Sign Up</button>
@@ -94,4 +96,4 @@
     <script src="/js/signUp.js"></script>
 </body>
 
-</html> 
+</html>
