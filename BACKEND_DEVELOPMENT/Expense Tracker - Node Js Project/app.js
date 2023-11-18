@@ -5,10 +5,11 @@ const bodyParser = require('body-parser');
 const sequelize = require('./util/dbConfig');
 const User = require('./model/user');
 const Expenses = require('./model/expense');
-const homePageRoute = require('./router/homePage');
-const userRoutes = require('./router/user');
-const expenseRoutes = require('./router/expense');
-const port = 8001
+const homePageRoute = require('./routes/home');
+const userRoutes = require('./routes/user');
+const expenseRoutes = require('./routes/expense');
+const port = 8001;
+const userAuthentication = require('./middleware/authentication');
 
 // middleware used for all routes
 app.use(cors());
@@ -18,9 +19,10 @@ app.use(express.static('public'))
 // user routes for sign-up and login
 app.use(homePageRoute)
 app.use('/user', userRoutes)
-app.use('/expense', expenseRoutes)
+// adding external middleware which runs before going to expense routes
+app.use('/expense', userAuthentication.authenticate, expenseRoutes)
 
-// user and expenses associations
+// user and expenses associations ( 1:M ) => ( user: Expenses )
 User.hasMany(Expenses)
 Expenses.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
 
