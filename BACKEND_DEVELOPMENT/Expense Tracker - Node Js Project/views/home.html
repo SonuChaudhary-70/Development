@@ -11,6 +11,7 @@
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <style>
         label {
@@ -22,10 +23,6 @@
 </head>
 
 <body style="background-color: #1b8381;">
-
-    <div class="d-flex justify-content-center mt-2">
-        <button type="submit" class="btn btn-dark w-50" style="opacity: 1;" value="submit" id="buy_premium">Buy Premium</button>
-    </div>
     <!-- Enter Expense Details here -->
     <div class="container-fluid mt-5 mx-2">
         <div class="row d-flex justify-content-center">
@@ -79,6 +76,10 @@
                 </form>
             </div>
         </div>
+        <div class="d-flex justify-content-center mt-2" id="purchase">
+            <button class="btn btn-dark w-50" style="opacity: 1;" id="buy_premium">Buy
+                Premium</button>
+        </div>
         <!-- Expense table start here -->
         <div class="row bg-dange mt-4  d-flex justify-content-center">
             <div class="col-lg-6 col-md-9 col-sm-12  border border-2 rounded">
@@ -120,8 +121,15 @@
         </div>
     </div>
 
-
     <script src="/js/home.js"></script>
+    <!-- bootstrap cdn link
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+        axios cdn link -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
+    <!-- razorpay cdn link -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
 
 </html>

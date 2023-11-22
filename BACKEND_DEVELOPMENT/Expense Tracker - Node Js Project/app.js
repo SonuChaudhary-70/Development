@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const sequelize = require('./util/dbConfig');
 const User = require('./model/user');
 const Expenses = require('./model/expense');
+const Orders = require('./model/order');
 const homePageRoute = require('./routes/home');
 const userRoutes = require('./routes/user');
 const expenseRoutes = require('./routes/expense');
@@ -22,11 +23,15 @@ app.use(homePageRoute)
 app.use('/user', userRoutes)
 // adding external middleware which runs before going to expense routes
 app.use('/expense', userAuthentication.authenticate, expenseRoutes)
-app.use('purchase', userAuthentication.authenticate, orderRoutes)
+app.use('/purchase', userAuthentication.authenticate, orderRoutes)
 
 // user and expenses associations ( 1:M ) => ( user: Expenses )
 User.hasMany(Expenses)
 Expenses.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
+
+// user and order association
+User.hasMany(Orders);
+Orders.belongsTo(User, {constraint:true, onDelete: "CASCADE"});
 
 // server creation and connecting db with server
 sequelize

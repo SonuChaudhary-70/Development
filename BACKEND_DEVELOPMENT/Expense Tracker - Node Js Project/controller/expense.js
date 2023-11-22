@@ -20,7 +20,7 @@ exports.addExpense = async (req, res) => {
 exports.getAllExpenses = async (req, res) => {
     try {
         const expenses = await req.user.getExpenses();
-        return res.status(200).json({ success: true, data: expenses })
+        return res.status(200).json({ success: true, data: expenses, premiumMember: req.user.isPremiumMember })
     }
     catch (err) {
         console.log('Error while fetching expenses from DB:', err);

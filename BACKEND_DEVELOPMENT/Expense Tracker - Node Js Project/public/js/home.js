@@ -1,3 +1,4 @@
+
 // Global variables
 const expForm = document.querySelector('#form')
 const amount = document.querySelector('#amount')
@@ -9,33 +10,34 @@ const expenseDate = document.querySelector('#expense-date')
 const token = JSON.parse(localStorage.getItem('token'))
 expenseBody.addEventListener('click', deleteData);
 expenseBody.addEventListener('click', editData);
-const premium = document.querySelector('#buy_premium')
+const buyPremium = document.querySelector('#buy_premium');
 
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    // this is Immediately Invoked Function Expression (IIFE) 
-    (function () {
-        'use strict'
 
-        // Fetch all the forms we want to apply validation styles to
-        let forms = document.querySelectorAll('.needs-validation')
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+// this is Immediately Invoked Function Expression (IIFE) 
+(function () {
+    'use strict'
 
-        // Loop over them and prevent submission
-        // Array.prototype.slice.call(forms)
-        forms.forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                // checkValidity method Returns true if an input element contains valid data.
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    // stopPropagation() method prevents propagation of the same event from being called.
-                    // matlab stop propagation method event to propagate or we can say execute karne se rok deta hai
-                    event.stopPropagation()
-                }
-                form.classList.add('was-validated');
-                // false as an argument is liye pass kiye jisse capturing disable ho jaye
-                // capturing means event propagation from parent to child
-            }, false)
-        })
-    })()
+    // Fetch all the forms we want to apply validation styles to
+    let forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    // Array.prototype.slice.call(forms)
+    forms.forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            // checkValidity method Returns true if an input element contains valid data.
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                // stopPropagation() method prevents propagation of the same event from being called.
+                // matlab stop propagation method event to propagate or we can say execute karne se rok deta hai
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated');
+            // false as an argument is liye pass kiye jisse capturing disable ho jaye
+            // capturing means event propagation from parent to child
+        }, false)
+    })
+})()
 
 window.addEventListener('load', async () => {
     let response = await axios.get('http://localhost:8001/expense/get-expenses', { headers: { 'Authorization': token } });
@@ -71,6 +73,11 @@ expForm.addEventListener('submit', async (e) => {
 })
 
 function showExpense(expenses) {
+    // remove buy premium button if user is premium user
+    if (expenses.premiumMember) {
+        // buyPremium.parentNode.classList.replace('d-flex', 'd-none')
+        buyPremium.parentNode.removeChild(buyPremium);
+    }
     if (expenses.success && expenses.data.length > 0) {
         expenses.data.forEach((exp, index) => {
             const tr = document.createElement('tr')
@@ -90,8 +97,6 @@ function showExpense(expenses) {
             tr.innerHTML = html;
             expenseBody.appendChild(tr)
         })
-    } else {
-        console.log('Error while getting expense in show expense method');
     }
 }
 
@@ -165,7 +170,34 @@ function showError(element, errMsg) {
     }, 3000)
 }
 
-premium.addEventListener('click', async () => {
-    let response = await axios.get(`http://localhost:8001/purchase/premium-member-ship`, { headers: { 'Authorization': token } });
-    console.log('premium response :',response);
+buyPremium.addEventListener('click', async (e) => {
+    try {
+        let response = await axios.get(`http://localhost:8001/purchase/premium-membership`, { headers: { 'Authorization': token } });
+        if (response.status === 201) {
+            let options = {
+                'key': response.data.keyId,
+                'order_id': response.data.order_detail.id,
+                'handler': async (response) => {
+                    let orderComp = await axios.post('http://localhost:8001/purchase/update-transaction-status', { order_id: options.order_id, payment_id: response.razorpay_payment_id }, { headers: { 'Authorization': token } });
+                    console.log('payment success', orderComp);
+                    // const prem = document.getElementById('purchase').remove();
+                    buyPremium.parentNode.removeChild(buyPremium);
+                    alert('You are premium user now')
+                    // window.location.reload()
+                }
+            }
+            const rzp1 = new Razorpay(options);
+            rzp1.open();
+            e.preventDefault();
+
+            rzp1.on('payment.failed', async () => {
+                let orderComp = await axios.post('http://localhost:8001/purchase/update-transaction-status', { order_id: options.order_id, payment_id: null }, { headers: { 'Authorization': token } });
+                console.log('payment failed', orderComp);
+                alert('Payment Failed')
+            })
+        }
+    }
+    catch (err) {
+        console.log('premium feature error: ', err);
+    }
 })

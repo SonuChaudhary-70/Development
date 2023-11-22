@@ -66,7 +66,7 @@ function showError(element, errMsg) {
     element.classList.replace('d-none', 'd-flex');
     setTimeout(() => {
         element.classList.replace('d-flex', 'd-none')
-    }, 5000)
+    }, 2000)
 }
 
 document.getElementById('email')
