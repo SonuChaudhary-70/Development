@@ -2,11 +2,13 @@ const Expense = require('../model/expense')
 
 exports.addExpense = async (req, res) => {
     const { Amount, Description, Category, date } = req.body;
+    // console.log(req.user);
     const createdExp = await req.user.createExpense({
         amount: Amount,
         description: Description,
         category: Category,
-        date: date
+        date: date,
+        // username:req.user.username
     })
     try {
         return res.status(201).json({ success: true, data: createdExp, message: 'expense created successfully' })
@@ -20,7 +22,7 @@ exports.addExpense = async (req, res) => {
 exports.getAllExpenses = async (req, res) => {
     try {
         const expenses = await req.user.getExpenses();
-        return res.status(200).json({ success: true, data: expenses, premiumMember: req.user.isPremiumMember })
+        return res.status(200).json({ success: true, data: expenses })
     }
     catch (err) {
         console.log('Error while fetching expenses from DB:', err);

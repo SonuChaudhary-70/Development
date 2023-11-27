@@ -10,6 +10,7 @@ const homePageRoute = require('./routes/home');
 const userRoutes = require('./routes/user');
 const expenseRoutes = require('./routes/expense');
 const orderRoutes = require('./routes/order');
+const premiumFeatureRoutes = require('./routes/premiumFeature')
 const port = 8001;
 const userAuthentication = require('./middleware/authentication');
 
@@ -19,11 +20,12 @@ app.use(bodyParser.json());
 app.use(express.static('public'))
 
 // user routes for sign-up and login
-app.use(homePageRoute)
+app.use('/', homePageRoute)
 app.use('/user', userRoutes)
-// adding external middleware which runs before going to expense routes
+// adding external middleware which runs before going to any routes
 app.use('/expense', userAuthentication.authenticate, expenseRoutes)
 app.use('/purchase', userAuthentication.authenticate, orderRoutes)
+app.use('/premium', userAuthentication.authenticate,premiumFeatureRoutes)
 
 // user and expenses associations ( 1:M ) => ( user: Expenses )
 User.hasMany(Expenses)
@@ -31,7 +33,7 @@ Expenses.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
 
 // user and order association
 User.hasMany(Orders);
-Orders.belongsTo(User, {constraint:true, onDelete: "CASCADE"});
+Orders.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
 
 // server creation and connecting db with server
 sequelize

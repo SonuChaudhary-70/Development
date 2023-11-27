@@ -19,7 +19,8 @@ exports.login = async (req, res) => {
         if (!isValidUser) {
             return res.status(401).json({ success: false, message: 'Password not correct' })
         }
-        return res.status(200).json({ success: true, message: "User logged in successfully", authorized: true, token: generateAccessToken(user.username, user.id, user.email) })
+        const generateToken = jwt.sign({ userId: user.id, name: user.username, email: user.email, isPremiumUser: user.isPremiumMember }, secret_Key, { expiresIn: '365d' })
+        return res.status(200).json({ success: true, message: "User logged in successfully", authorized: true, token: generateToken });
     }
     catch (error) {
         console.log('Error while login :', error);
@@ -65,8 +66,4 @@ exports.isUserExist = async (req, res) => {
     catch (err) {
         console.log("Error in checking the user", err);
     }
-}
-
-function generateAccessToken(username, id, email) {
-    return jwt.sign({ userId: id, name: username, email: email }, secret_Key, { expiresIn: '365d' });
 }

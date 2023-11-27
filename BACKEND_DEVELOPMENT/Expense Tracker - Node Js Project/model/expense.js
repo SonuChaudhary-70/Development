@@ -16,9 +16,7 @@ const Expense = sequelize.define('Expense', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    category: {
-        // type: Sequelize.ENUM(['food', 'electricity']),
-        type:Sequelize.STRING,
+    category: {        type:Sequelize.STRING,
         allowNull: false,
         unique: false
     },
@@ -26,7 +24,11 @@ const Expense = sequelize.define('Expense', {
         type: Sequelize.DATEONLY,
         unique:false,
         allowNull: false
-    }
+    },
+    // username:{
+    //     type: Sequelize.STRING,
+    //     allowNull: false
+    // }
 })
 
 module.exports = Expense

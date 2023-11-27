@@ -1,4 +1,3 @@
-
 // Global variables
 const expForm = document.querySelector('#form')
 const amount = document.querySelector('#amount')
@@ -8,10 +7,12 @@ const errDiv = document.querySelector('#errMsg')
 const expenseBody = document.querySelector('#expTabBody')
 const expenseDate = document.querySelector('#expense-date')
 const token = JSON.parse(localStorage.getItem('token'))
+let totalExpenses = 0
+
+
+// add event handlers to expense table
 expenseBody.addEventListener('click', deleteData);
 expenseBody.addEventListener('click', editData);
-const buyPremium = document.querySelector('#buy_premium');
-
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 // this is Immediately Invoked Function Expression (IIFE) 
@@ -42,13 +43,20 @@ const buyPremium = document.querySelector('#buy_premium');
 window.addEventListener('load', async () => {
     let response = await axios.get('http://localhost:8001/expense/get-expenses', { headers: { 'Authorization': token } });
     try {
-        showExpense(response.data)
+        showExpense(response.data);
+        const decodedToken = parseJwt(token);
+        // console.log(decodedToken.isPremiumUser);
+        if (decodedToken.isPremiumUser) {
+            document.getElementById('buy_premium').classList.add('d-none');
+            document.getElementById('message').classList.remove('d-none')
+            document.getElementById('leaderBoard').classList.remove('d-none');
+            // showLeaderBoard()
+        }
     }
     catch (err) { console.log(err.message) }
-
 })
 
-// add event on add expense
+// add expense to the backend
 expForm.addEventListener('submit', async (e) => {
     // e.preventDefault();
     if (!expForm.checkValidity()) {
@@ -73,31 +81,29 @@ expForm.addEventListener('submit', async (e) => {
 })
 
 function showExpense(expenses) {
-    // remove buy premium button if user is premium user
-    if (expenses.premiumMember) {
-        // buyPremium.parentNode.classList.replace('d-flex', 'd-none')
-        buyPremium.parentNode.removeChild(buyPremium);
-    }
     if (expenses.success && expenses.data.length > 0) {
+        const tr2 = document.createElement('tr')
         expenses.data.forEach((exp, index) => {
-            const tr = document.createElement('tr')
+            const tr1 = document.createElement('tr');
             const html = `
-            <tr>
             <th scope="row">${index + 1}</th>
-            <td>${exp.amount}</td>
             <td>${exp.description}</td>
             <td>${exp.category}</td>
             <td>${exp.date}</td>
+            <td>${exp.amount}</td>
             <td>
             <button type="button" class="btn btn-outline-warning btn-sm edit text-dark" id="${exp.id}">Edit</button>
             <button type="button" onclick="${deleteData}" class="btn btn-outline-danger btn-sm ms-2 delete text-dark" id="${exp.id}">Delete</button>
-            </td>
-            </tr>
-                `
-            tr.innerHTML = html;
-            expenseBody.appendChild(tr)
+            </td>`
+            tr1.innerHTML = html;
+            expenseBody.appendChild(tr1)
+            totalExpenses += exp.amount
         })
+        tr2.innerHTML = `<th scope="row" colspan="2" class="pe-0">Total Expenses (INR)&nbsp;:
+        <td colspan="4" class="ps-0 text-danger h4">&#8377;${totalExpenses}</td>`
+        expenseBody.appendChild(tr2)
     }
+    // console.log('total exp :',total);
 }
 
 async function editData(e) {
@@ -170,20 +176,46 @@ function showError(element, errMsg) {
     }, 3000)
 }
 
-buyPremium.addEventListener('click', async (e) => {
+
+// premium user section
+// global variables
+const buyPremiumBtn = document.querySelector('#buy_premium');
+const leaderBoardBtn = document.querySelector('#leaderBoard')
+const leaderTableBody = document.querySelector('#leaderTabBody');
+
+// add event handlers 
+buyPremiumBtn.addEventListener('click', buyPremium);
+leaderBoardBtn.addEventListener('click', showLeaderBoard);
+
+
+async function showLeaderBoard() {
+    let allExpenses = await axios.get('http://localhost:8001/premium/update-leaderBoard', { headers: { 'Authorization': token } });
+    allExpenses.data.totalAmount.forEach((exp) => {
+        const tr = document.createElement('tr');
+        const html = `
+        <td>1</td>
+        <td>${exp.User.username}</td>
+        <td>${exp.total_amount}</td>`
+        tr.innerHTML = html;
+        leaderTableBody.appendChild(tr)
+    })
+    leaderBoardBtn.removeEventListener('click', showLeaderBoard);
+}
+
+async function buyPremium(e) {
     try {
-        let response = await axios.get(`http://localhost:8001/purchase/premium-membership`, { headers: { 'Authorization': token } });
+        let response = await axios.get(`http://localhost:8001/purchase/purchase-premium-membership`, { headers: { 'Authorization': token } });
         if (response.status === 201) {
             let options = {
                 'key': response.data.keyId,
                 'order_id': response.data.order_detail.id,
                 'handler': async (response) => {
                     let orderComp = await axios.post('http://localhost:8001/purchase/update-transaction-status', { order_id: options.order_id, payment_id: response.razorpay_payment_id }, { headers: { 'Authorization': token } });
-                    console.log('payment success', orderComp);
-                    // const prem = document.getElementById('purchase').remove();
-                    buyPremium.parentNode.removeChild(buyPremium);
-                    alert('You are premium user now')
-                    // window.location.reload()
+                    console.log('payment success', orderComp.data.new_token);
+                    localStorage.setItem('token', JSON.stringify(orderComp.data.new_token));
+                    alert('You are premium user now.');
+                    showLeaderBoard()
+                    window.location.reload()
                 }
             }
             const rzp1 = new Razorpay(options);
@@ -200,4 +232,14 @@ buyPremium.addEventListener('click', async (e) => {
     catch (err) {
         console.log('premium feature error: ', err);
     }
-})
+}
+
+// decode the token saved in local storage
+function parseJwt(token) {
+    if (!token) {
+        return;
+    }
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    return JSON.parse(window.atob(base64));
+}

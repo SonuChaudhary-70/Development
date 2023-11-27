@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const expenseController = require('../controller/expense.js');
 
+
 // add-expense routes
 router.post('/add-expense',expenseController.addExpense);
 
