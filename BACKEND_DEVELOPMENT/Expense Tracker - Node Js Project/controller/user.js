@@ -67,3 +67,7 @@ exports.isUserExist = async (req, res) => {
         console.log("Error in checking the user", err);
     }
 }
+
+exports.forgotPassword = async (req, res) => {
+    console.log('forgot route work :', req.body);
+}

@@ -48,12 +48,12 @@ exports.getExpenseById = async (req, res) => {
 
 exports.updateExpense = async (req, res) => {
     let Id = req.params.id;
-    let { Amount, Description, Category, date } = req.body;
-    console.log(Amount);
+    let { Expense_Amount, Description, Category, date } = req.body;
+    console.log(req.body);
     const t = await Sequelize.transaction();
     try {
         let updateExp = Expense.update({
-            amount: Amount,
+            amount: Expense_Amount,
             description: Description,
             category: Category,
             date: date
