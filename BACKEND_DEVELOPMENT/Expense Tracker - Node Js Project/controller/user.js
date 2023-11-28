@@ -70,4 +70,5 @@ exports.isUserExist = async (req, res) => {
 
 exports.forgotPassword = async (req, res) => {
     console.log('forgot route work :', req.body);
+    return res.status(200).json({ success: true, data: req.body })
 }

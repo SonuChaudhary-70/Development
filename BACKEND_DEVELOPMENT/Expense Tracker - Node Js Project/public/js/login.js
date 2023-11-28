@@ -1,11 +1,11 @@
 
 // Global variables or instances
-let loginForm = document.querySelector('#formData')
-const email = document.querySelector('#email');
-const password = document.querySelector('#password');
+const loginForm = document.querySelector('#formData')
+const loginEmail = document.querySelector('#email');
+const loginPassword = document.querySelector('#password');
 const loginBtn = document.querySelector('#login');
-const resetPassword = document.querySelector('#resetPassword');
-const typeEmail = document.querySelector('#typeEmail')
+const resetPasswordBtn = document.querySelector('#resetPassword');
+const resetPasswordEmail = document.querySelector('#typeEmail')
 let errDiv = document.querySelector('#errMsg');
 let userNotExistErr = document.querySelector('#userNotExistErr');
 let passErr = document.querySelector('#passErr');
@@ -14,8 +14,8 @@ let passErr = document.querySelector('#passErr');
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     let credentials = {
-        email: email.value,
-        password: password.value
+        email: loginEmail.value,
+        password: loginPassword.value
     };
     if (!loginForm.checkValidity()) {
         showError(errDiv, 'Please enter all required fields');
@@ -47,12 +47,11 @@ function showError(element, errMsg) {
     }, 2000)
 }
 
-resetPassword.addEventListener('click', (e) => {
+resetPasswordBtn.addEventListener('click', async (e) => {
     e.preventDefault()
-    let email = typeEmail.value
-    console.log(email);
-    typeEmail.checkValidity()
-    axios.post('http://localhost:8001/user/password/forgot-password', email)
+    let email = resetPasswordEmail.value
+    let response = await axios.post('http://localhost:8001/user/password/forgot-password', email)
+    console.log(response);
     // alert('password reset link send to your email id')
     // http://localhost:8001/user/password/forgot-password
 })
