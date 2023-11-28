@@ -1,20 +1,21 @@
-const Expense = require('../model/expense')
+const Expense = require('../model/expense');
+const User = require('../model/user');
 
 exports.addExpense = async (req, res) => {
     const { Amount, Description, Category, date } = req.body;
-    // console.log(req.user);
-    const createdExp = await req.user.createExpense({
-        amount: Amount,
-        description: Description,
-        category: Category,
-        date: date,
-        // username:req.user.username
-    })
+    const total = Number(req.user.total_amount) + Number(Amount)
     try {
+        const createdExp = await req.user.createExpense({
+            amount: Amount,
+            description: Description,
+            category: Category,
+            date: date,
+        })
+        // const userUpdate = await req.user.update({ total_amount: total });
         return res.status(201).json({ success: true, data: createdExp, message: 'expense created successfully' })
     }
     catch (err) {
-        console.log('Error while adding expense in DB :', err);
+        console.log('Error while adding an updating the user total expense expense in DB :', err);
         return res.json({ success: false, Error: err })
     }
 }
@@ -73,3 +74,7 @@ exports.deleteExpense = async (req, res) => {
         return res.json({ success: false, Error: err })
     }
 }
+
+// function updateUser(req, res) {
+//     const Amount = req.body
+// }

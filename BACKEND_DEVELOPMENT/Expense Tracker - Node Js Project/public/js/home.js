@@ -50,7 +50,7 @@ window.addEventListener('load', async () => {
             document.getElementById('buy_premium').classList.add('d-none');
             document.getElementById('message').classList.remove('d-none')
             document.getElementById('leaderBoard').classList.remove('d-none');
-            // showLeaderBoard()
+            showLeaderBoard()
         }
     }
     catch (err) { console.log(err.message) }
@@ -189,8 +189,8 @@ leaderBoardBtn.addEventListener('click', showLeaderBoard);
 
 
 async function showLeaderBoard() {
-    let allExpenses = await axios.get('http://localhost:8001/premium/update-leaderBoard', { headers: { 'Authorization': token } });
-    allExpenses.data.totalAmount.forEach((exp) => {
+    let allUserTotalExpense = await axios.get('http://localhost:8001/premium/update-leaderBoard', { headers: { 'Authorization': token } });
+    allUserTotalExpense.data.totalAmount.forEach((exp) => {
         const tr = document.createElement('tr');
         const html = `
         <td>1</td>
@@ -199,7 +199,7 @@ async function showLeaderBoard() {
         tr.innerHTML = html;
         leaderTableBody.appendChild(tr)
     })
-    leaderBoardBtn.removeEventListener('click', showLeaderBoard);
+    // leaderBoardBtn.removeEventListener('click', showLeaderBoard);
 }
 
 async function buyPremium(e) {

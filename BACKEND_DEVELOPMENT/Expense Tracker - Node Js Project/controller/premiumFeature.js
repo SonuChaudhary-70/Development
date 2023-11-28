@@ -23,6 +23,13 @@ exports.updateLeaderBoard = async (req, res) => {
     }
 }
 
-
-
-
+// exports.leader = async (req, res) => {
+//     const response = await req.user.update({ total_amount: req.body.total_amount },
+//         {
+//             attributes: ['id', 'username', 'total_amount'],
+//             returning: false, // Enable returning the updated record
+//             plain: true, // Return only the updated row (not an array)
+//         });
+//     // const response = await User.update({ total_amount: req.body.total_amount }, { where: { id: req.user.id } });
+//     return res.status(200).json({ success: true, message: 'total expense updated in user table', data: response })
+// }

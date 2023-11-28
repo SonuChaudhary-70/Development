@@ -21,9 +21,13 @@ const User = sequelize.define('User', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    isPremiumMember:{
+    isPremiumMember: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+    },
+    total_amount: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
     }
 });
 
