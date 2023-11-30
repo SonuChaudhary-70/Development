@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
-const secret_Key = '8832d8ddb94a53d5fc43d7312597eef4f7f056b1ddb1dd416a0cb4171974b9fe9593dbf57dfdf53fe351cf74e0e01a3704efe90cd8bfe9639d9f68ef12312027'
-const User = require('../model/user');
+const User = require('../model/user')
+require('dotenv').config()
+const secret_Key = process.env.SECRET_KEY
 
 
 exports.authenticate = async (req, res, next) => {
@@ -8,7 +9,6 @@ exports.authenticate = async (req, res, next) => {
         const token = req.header('Authorization');
         const user = jwt.verify(token, secret_Key)
         const userFound = await User.findByPk(user.userId);
-        // console.log('token :', token);
         req.user = userFound
         next();
     }

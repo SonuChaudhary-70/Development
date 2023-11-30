@@ -11,6 +11,4 @@ router.post('/login', signUpController.login)
 // check user exist with given mail id or not for both login and sign-up routes
 router.post('/:id', signUpController.isUserExist)
 
-router.post('/password/forgot-password',signUpController.forgotPassword)
-
 module.exports = router;

@@ -6,26 +6,29 @@ const sequelize = require('./util/dbConfig');
 const User = require('./model/user');
 const Expenses = require('./model/expense');
 const Orders = require('./model/order');
-const homePageRoute = require('./routes/home');
+const ForgotPasswordRequests = require('./model/ForgotPasswordRequests');
+const homePageRoutes = require('./routes/home');
 const userRoutes = require('./routes/user');
 const expenseRoutes = require('./routes/expense');
 const orderRoutes = require('./routes/order');
 const premiumFeatureRoutes = require('./routes/premiumFeature')
-const port = 8001;
+const passwordRoutes = require('./routes/password')
 const userAuthentication = require('./middleware/authentication');
+require('dotenv').config()
 
-// middleware used for all routes
+// middleware which are used for all routes
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'))
 
 // user routes for sign-up and login
-app.use('/', homePageRoute)
+app.use('/', homePageRoutes)
 app.use('/user', userRoutes)
-// adding external middleware which runs before going to any routes
+app.use('/password', passwordRoutes)
+// adding external middleware which runs before going to any below routes
 app.use('/expense', userAuthentication.authenticate, expenseRoutes)
 app.use('/purchase', userAuthentication.authenticate, orderRoutes)
-app.use('/premium', userAuthentication.authenticate,premiumFeatureRoutes)
+app.use('/premium', userAuthentication.authenticate, premiumFeatureRoutes)
 
 // user and expenses associations ( 1:M ) => ( user: Expenses )
 User.hasMany(Expenses)
@@ -35,15 +38,19 @@ Expenses.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
 User.hasMany(Orders);
 Orders.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
 
+// user and ForgotPasswordRequests association
+User.hasMany(ForgotPasswordRequests);
+ForgotPasswordRequests.belongsTo(User,{ constraint: true, onDelete: "CASCADE" });
+
 // server creation and connecting db with server
 sequelize
     // .sync({ force: true })
     .sync()
     .then(() => {
-        app.listen(port)
-        console.log('\nserver is listening on port :', port);
+        app.listen(process.env.PORT)
+        console.log('\nserver is listening on port :', process.env.PORT);
         console.log('\nDb connected successfully');
     })
-    .catch(err => {
-        console.log('Error while creating server', err);
+    .catch((err) => {
+        console.log('Error while creating server :', err);
     })

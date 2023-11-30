@@ -1,7 +1,10 @@
 const User = require('../model/user');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const secret_Key = '8832d8ddb94a53d5fc43d7312597eef4f7f056b1ddb1dd416a0cb4171974b9fe9593dbf57dfdf53fe351cf74e0e01a3704efe90cd8bfe9639d9f68ef12312027'
+const nodemailer = require('nodemailer');
+require('dotenv').config()
+const secret_Key = process.env.SECRET_KEY;
+
 
 function isStringInvalid(string) {
     return !!(string == undefined || string.length === 0);
@@ -66,9 +69,4 @@ exports.isUserExist = async (req, res) => {
     catch (err) {
         console.log("Error in checking the user", err);
     }
-}
-
-exports.forgotPassword = async (req, res) => {
-    console.log('forgot route work :', req.body);
-    return res.status(200).json({ success: true, data: req.body })
 }
