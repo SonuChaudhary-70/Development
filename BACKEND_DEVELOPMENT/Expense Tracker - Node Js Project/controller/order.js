@@ -48,7 +48,7 @@ exports.updateTransaction = async (req, res) => {
                 })
         }
         else {
-            throw new Error('something went at frontend')
+            throw new Error('something went wrong at frontend');
         }
     }
     catch (err) {
