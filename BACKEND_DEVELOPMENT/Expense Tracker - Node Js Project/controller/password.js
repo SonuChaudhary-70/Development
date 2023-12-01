@@ -3,12 +3,13 @@ require('dotenv').config()
 
 // send email to the user with nodemailer  
 exports.forgotPassword = async (req, res) => {
+    console.log('id :', req.ForgotPasswordRequests);
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
         auth: {
-            user: 'siddhantc78@gmail.com',
+            user: process.env.EMAIL,
             pass: process.env.PASSWORD,
         },
     });
