@@ -15,7 +15,6 @@ router.get('/homePage', (req, res) => {
 });
 
 router.get('/report', (req, res) => {
-    console.log('report route works');
     res.sendFile('report.html', { root: 'views' })
 });
 

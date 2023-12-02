@@ -14,7 +14,7 @@ exports.forgotPassword = async (req, res) => {
     // if user found then update the forgot password request table
     if (user) {
         const id = uuid.v4();
-        const newRequest = await user.createForgotPasswordReq({
+        await user.createForgotPasswordReq({
             id: id,
             isActive: true
         });
@@ -52,8 +52,8 @@ exports.forgotPassword = async (req, res) => {
             console.log('mail error :', err);
             return res.status(500).json({ success: false, message: 'something went wrong', error: err })
         }
-    }else{
-        return res.status(401).json({ success: false, message: 'Email not registered. Please enter registered email id'})
+    } else {
+        return res.status(401).json({ success: false, message: 'Email not registered. Please enter registered email id' })
     }
 }
 
@@ -95,7 +95,7 @@ exports.updatePassword = async (req, res) => {
         .then(async (user) => {
             if (user) {
                 let hashedPassword = await bcrypt.hash(newPassword, 10)
-                const updatePassword = await User.update({ password: hashedPassword }, { where: { id: user.id } });
+                await User.update({ password: hashedPassword }, { where: { id: user.id } });
                 // res.status(200).json({ status: true, message: 'password changed' });
                 res.status(200).send(`
                 <h4>Your password has been reset.</h4>
