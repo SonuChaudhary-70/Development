@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../util/dbConfig.js');
-const uuid4 = require('uuid').v4();
+// const uuid4 = require('uuid').v4();
 // const uuid4 = uuid.v4()
 
 
-const ForgotPasswordRequests = sequelize.define('ForgotPasswordRequests', {
+const ForgotPasswordReq = sequelize.define('ForgotPasswordReq', {
     id: {
         type: Sequelize.UUID,
         primaryKey: true,
@@ -18,4 +18,4 @@ const ForgotPasswordRequests = sequelize.define('ForgotPasswordRequests', {
     }
 })
 
-module.exports = ForgotPasswordRequests;
+module.exports = ForgotPasswordReq;

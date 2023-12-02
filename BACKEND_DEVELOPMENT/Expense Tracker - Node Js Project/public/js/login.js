@@ -9,6 +9,7 @@ const resetPasswordEmail = document.querySelector('#typeEmail')
 let errDiv = document.querySelector('#errMsg');
 let userNotExistErr = document.querySelector('#userNotExistErr');
 let passErr = document.querySelector('#passErr');
+let forgotPassEmailErr = document.querySelector('#forgotPassEmail')
 
 
 loginForm.addEventListener('submit', async (e) => {
@@ -49,9 +50,18 @@ function showError(element, errMsg) {
 
 resetPasswordBtn.addEventListener('click', async (e) => {
     e.preventDefault()
-    let email = resetPasswordEmail.value
-    let response = await axios.post('http://localhost:8001/user/password/forgot-password', email)
-    console.log(response);
-    // alert('password reset link send to your email id')
-    // http://localhost:8001/user/password/forgot-password
+    if (resetPasswordEmail.value == '') {
+        showError(forgotPassEmailErr, 'Please enter valid email address')
+    }
+    const token = JSON.parse(localStorage.getItem('token'));
+    let response = await axios.post('http://localhost:8001/password/forgot-password', { email: resetPasswordEmail.value }, { headers: { 'Authorization': token } });
+    if (response.data.success) {
+        let forgot = document.getElementById('forgot');
+        forgot.innerHTML = `Reset password email sent.
+        You should soon receive an email allowing you to reset your password. Please make sure to check
+        your spam and trash if you can't find the email.`
+        // to open bootstrap model we use Modal class of bootstrap in js as constructor
+        // new bootstrap.Modal(document.getElementById('linkSent')).show();
+    }
 })
+

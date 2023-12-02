@@ -6,7 +6,7 @@ const sequelize = require('./util/dbConfig');
 const User = require('./model/user');
 const Expenses = require('./model/expense');
 const Orders = require('./model/order');
-const ForgotPasswordRequests = require('./model/ForgotPasswordRequests');
+const ForgotPasswordReq = require('./model/ForgotPassword');
 const homePageRoutes = require('./routes/home');
 const userRoutes = require('./routes/user');
 const expenseRoutes = require('./routes/expense');
@@ -15,6 +15,19 @@ const premiumFeatureRoutes = require('./routes/premiumFeature')
 const passwordRoutes = require('./routes/password')
 const userAuthentication = require('./middleware/authentication');
 require('dotenv').config()
+
+// DEFINE ASSoCIATIONs BETWEEN MODELS
+// user and expenses associations ( 1:M ) => ( user: Expenses )
+User.hasMany(Expenses)
+Expenses.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
+
+// user and order association
+User.hasMany(Orders);
+Orders.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
+
+// user and ForgotPasswordRequests association
+User.hasMany(ForgotPasswordReq);
+ForgotPasswordReq.belongsTo(User,{ constraint: true, onDelete: "CASCADE" });
 
 // middleware which are used for all routes
 app.use(cors());
@@ -29,18 +42,6 @@ app.use('/password', passwordRoutes)
 app.use('/expense', userAuthentication.authenticate, expenseRoutes)
 app.use('/purchase', userAuthentication.authenticate, orderRoutes)
 app.use('/premium', userAuthentication.authenticate, premiumFeatureRoutes)
-
-// user and expenses associations ( 1:M ) => ( user: Expenses )
-User.hasMany(Expenses)
-Expenses.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
-
-// user and order association
-User.hasMany(Orders);
-Orders.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
-
-// user and ForgotPasswordRequests association
-User.hasMany(ForgotPasswordRequests);
-ForgotPasswordRequests.belongsTo(User,{ constraint: true, onDelete: "CASCADE" });
 
 // server creation and connecting db with server
 sequelize

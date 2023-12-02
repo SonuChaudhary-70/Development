@@ -210,7 +210,12 @@ async function buyPremium(e) {
                 'key': response.data.keyId,
                 'order_id': response.data.order_detail.id,
                 'handler': async (response) => {
-                    let orderComp = await axios.post('http://localhost:8001/purchase/update-transaction-status', { order_id: options.order_id, payment_id: response.razorpay_payment_id }, { headers: { 'Authorization': token } });
+                    let orderComp = await axios.post('http://localhost:8001/purchase/update-transaction-status', {
+                        order_id: options.order_id,
+                        payment_id: response.razorpay_payment_id,
+                        success: true,
+                        status: 200
+                    }, { headers: { 'Authorization': token } });
                     console.log('payment success', orderComp.data.new_token);
                     localStorage.setItem('token', JSON.stringify(orderComp.data.new_token));
                     alert('You are premium user now.');
@@ -222,9 +227,14 @@ async function buyPremium(e) {
             rzp1.open();
             e.preventDefault();
 
-            rzp1.on('payment.failed', async () => {
-                let orderComp = await axios.post('http://localhost:8001/purchase/update-transaction-status', { order_id: options.order_id, payment_id: null }, { headers: { 'Authorization': token } });
-                console.log('payment failed', orderComp);
+            rzp1.on('payment.failed', async (response) => {
+                let orderFailed = await axios.post('http://localhost:8001/purchase/update-transaction-status', {
+                    order_id: response.error.metadata.order_id,
+                    payment_id: response.error.metadata.payment_id,
+                    success: false,
+                    status: 102
+                }, { headers: { 'Authorization': token } });
+                console.log('payment failed', orderFailed);
                 alert('Payment Failed')
             })
         }

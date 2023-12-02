@@ -83,8 +83,8 @@
                     </div>
 
                     <!-- Forgot password Modal-->
-                    <a class="h5 pe-auto" style="letter-spacing: 1px; text-decoration: none; cursor: pointer;" role="buton" data-bs-toggle="modal"
-                        data-bs-target="#forgotPassword">Forgot password?</a>
+                    <a class="h5 pe-auto" style="letter-spacing: 1px; text-decoration: none; cursor: pointer;"
+                        role="buton" data-bs-toggle="modal" data-bs-target="#forgotPassword">Forgot password?</a>
 
                     <!-- Login button -->
                     <div class="login d-flex justify-content-center">
@@ -99,7 +99,8 @@
 
                     <div class="sign up my-4 pb-2 d-flex flex-column justify-content-center">
                         <p>Don't have an account yet?</p>
-                        <a class='text-center h3 text-primary' href="http://localhost:8001/signUp" style="text-decoration: none;">Sign
+                        <a class='text-center h3 text-primary' href="http://localhost:8001/signUp"
+                            style="text-decoration: none;">Sign
                             Up</a>
                     </div>
 
@@ -109,10 +110,10 @@
     </div>
     <!-- Modal -->
     <!-- to make modal static change data-bs-backdrop value as static. if user click outside the modal then modal does not close automatically -->
-    <div class="modal fade" id="forgotPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    <div class="modal " id="forgotPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
         data-bs-backdrop="true" data-bs-keyboard="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-center">
+            <div class="modal-content text-center" id="forgot">
                 <div class="modal-header h5 text-white bg-dark justify-content-center">
                     Password Reset
                 </div>
@@ -121,14 +122,33 @@
                         Enter your email address and we'll send you an email with instructions to reset
                         your password.
                     </p>
-                    <div class="form-outline d-flex m-0 p-0">
-                        <input type="email" id="typeEmail" class="form-control my-3 mx-0 border border-2 border-dark" placeholder="Please enter your email address" required/>
+                    <div class="form-outline d-fle m-0 p-0">
+                        <input type="email" id="typeEmail" class="form-control my-3 mx-0 border border-2 border-dark"
+                            placeholder="Please enter your email address" required />
+                            <div class="d-none align-self-start invalid-feedback mb-2" id="forgotPassEmail">
+                            </div>
                     </div>
-                    <a href="" target="_self" class="btn btn-dark w-100 py-1 px-0" id="resetPassword" >Reset password</a>
+                    <a href="" target="_self" class="btn btn-dark w-100 py-1 px-0" id="resetPassword">Reset password</a>
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="" target="_self" class="btn btn-dark btn-sm ms-0" >Login</a>
+                        <a href="" target="_self" class="btn btn-dark btn-sm ms-0">Login</a>
                         <a href="http://localhost:8001/signup" class="btn btn-dark btn-sm ms-0">Sign Up</a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- sucess modal -->
+    <div class="modal" id="linkSent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-dark">
+                    <h1 class="modal-title fs-5 text-light" id="exampleModalLabel">Reset Link Sent</h1>
+                    <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p> Reset password email sent.
+                        You should soon receive an email allowing you to reset your password. Please make sure to check
+                        your spam and trash if you can't find the email.</p>
                 </div>
             </div>
         </div>
