@@ -6,7 +6,7 @@ const category = document.querySelector('#expense-category')
 const errDiv = document.querySelector('#errMsg')
 const expenseBody = document.querySelector('#expTabBody')
 const expenseDate = document.querySelector('#expense-date')
-const token = JSON.parse(localStorage.getItem('token'))
+const token = JSON.parse(localStorage.getItem('token'));
 let totalExpenses = 0
 
 
@@ -50,6 +50,7 @@ window.addEventListener('load', async () => {
             document.getElementById('buy_premium').classList.add('d-none');
             document.getElementById('message').classList.remove('d-none')
             document.getElementById('leaderBoard').classList.remove('d-none');
+            document.getElementById('generateReport').classList.remove('d-none');
             showLeaderBoard()
         }
     }
@@ -182,6 +183,7 @@ function showError(element, errMsg) {
 const buyPremiumBtn = document.querySelector('#buy_premium');
 const leaderBoardBtn = document.querySelector('#leaderBoard')
 const leaderTableBody = document.querySelector('#leaderTabBody');
+const generateReport = document.querySelector('#generateReport');
 
 // add event handlers 
 buyPremiumBtn.addEventListener('click', buyPremium);
@@ -253,3 +255,8 @@ function parseJwt(token) {
     const base64 = base64Url.replace("-", "+").replace("_", "/");
     return JSON.parse(window.atob(base64));
 }
+
+generateReport.addEventListener('click', () => {
+    console.log('clicked');
+    axios.get('http://localhost:8001/report')
+})
