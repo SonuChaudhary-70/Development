@@ -10,9 +10,9 @@ const ForgotPasswordReq = require('./model/ForgotPassword');
 const homePageRoutes = require('./routes/home');
 const userRoutes = require('./routes/user');
 const expenseRoutes = require('./routes/expense');
-const orderRoutes = require('./routes/order');
 const premiumFeatureRoutes = require('./routes/premiumFeature')
-const passwordRoutes = require('./routes/password')
+const passwordRoutes = require('./routes/password');
+const purchaseRoutes = require('./routes/purchase');
 const userAuthentication = require('./middleware/authentication');
 require('dotenv').config()
 
@@ -40,7 +40,7 @@ app.use('/user', userRoutes)
 app.use('/password', passwordRoutes)
 // adding external middleware which runs before going to any below routes
 app.use('/expense', userAuthentication.authenticate, expenseRoutes)
-app.use('/purchase', userAuthentication.authenticate, orderRoutes)
+app.use('/purchase', userAuthentication.authenticate, purchaseRoutes)
 app.use('/premium', userAuthentication.authenticate, premiumFeatureRoutes)
 
 // server creation and connecting db with server

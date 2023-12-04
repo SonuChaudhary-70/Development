@@ -1,9 +1,7 @@
 const User = require('../model/user');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
 require('dotenv').config()
-const secret_Key = process.env.SECRET_KEY;
 
 
 function isStringInvalid(string) {
@@ -22,8 +20,8 @@ exports.login = async (req, res) => {
         if (!isValidUser) {
             return res.status(401).json({ success: false, message: 'Password not correct' })
         }
-        const generateToken = jwt.sign({ userId: user.id, name: user.username, email: user.email, isPremiumUser: user.isPremiumMember }, secret_Key, { expiresIn: '365d' })
-        return res.status(200).json({ success: true, message: "User logged in successfully", authorized: true, token: generateToken });
+        const loginToken = jwt.sign({ id: user.id, name: user.username, email: user.email, isPremiumUser: user.isPremiumMember }, process.env.SECRET_KEY, { expiresIn: '365d' });
+        return res.status(200).json({ success: true, message: "User logged in successfully", authorized: true, token: loginToken });
     }
     catch (error) {
         console.log('Error while login :', error);
@@ -41,13 +39,14 @@ exports.signUp = async (req, res) => {
         let user = await User.findOne({ where: { email: email } });
         if (!user) {
             let hashedPassword = await bcrypt.hash(password, saltRounds)
-            User.create({
+            if (!hashedPassword) throw new Error('Error while hashing a password')
+            const user = await User.create({
                 username: username,
                 email: email,
                 password: hashedPassword
             });
-            if (!hashedPassword) throw new Error('Error while hashing password')
-            return res.status(200).json({ success: true, message: "User created successfully" })
+            // const signUpToken = jwt.sign({ new_user:user }, process.env.SECRET_KEY, { expiresIn: '365d' })
+            return res.status(200).json({ success: true, message: "User created successfully"});
         } else {
             return res.status(409).json({ success: false, message: "Email already exists" });
         }

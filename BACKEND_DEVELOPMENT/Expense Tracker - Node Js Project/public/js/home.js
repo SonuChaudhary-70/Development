@@ -206,13 +206,13 @@ async function showLeaderBoard() {
 
 async function buyPremium(e) {
     try {
-        let response = await axios.get(`http://localhost:8001/premium/purchase-premium-membership`, { headers: { 'Authorization': token } });
+        let response = await axios.get(`http://localhost:8001/purchase/purchase-premium-membership`, { headers: { 'Authorization': token } });
         if (response.status === 201) {
             let options = {
                 'key': response.data.keyId,
                 'order_id': response.data.order_detail.id,
                 'handler': async (response) => {
-                    let orderComp = await axios.post('http://localhost:8001/premium/update-transaction-status', {
+                    let orderComp = await axios.post('http://localhost:8001/purchase/update-transaction-status', {
                         order_id: options.order_id,
                         payment_id: response.razorpay_payment_id,
                         success: true,
@@ -230,7 +230,7 @@ async function buyPremium(e) {
             e.preventDefault();
 
             rzp1.on('payment.failed', async (response) => {
-                let orderFailed = await axios.post('http://localhost:8001/premium/update-transaction-status', {
+                let orderFailed = await axios.post('http://localhost:8001/purchase/update-transaction-status', {
                     order_id: response.error.metadata.order_id,
                     payment_id: response.error.metadata.payment_id,
                     success: false,
@@ -257,11 +257,16 @@ function parseJwt(token) {
 }
 
 generateReport.addEventListener('click', async () => {
-    let response = await axios.get('http://localhost:8001/premium/report/download', { headers: { 'Authorization': token } })
-    // window.location.href = 'http://localhost:8001/report'
-    let a = document.createElement('a');
-    console.log(response);
-    a.href = '#'
-    a.download = ''
-    a.click()
+    try {
+        let response = await axios.get('http://localhost:8001/premium/report/download', { headers: { 'Authorization': token } });
+        // make anchor tag and assign its href to file url that we get from backend
+        console.log(response);
+        let a = document.createElement('a');
+        a.href = response.data.fileUrl
+        // this will click that anchor tag/link automatically
+        a.click()
+    }
+    catch (error) {
+        console.log('Error in generating report', error.response.data.err);
+    }
 })
