@@ -40,6 +40,7 @@ expenseBody.addEventListener('click', editData);
     })
 })()
 
+// window reload section starts here
 window.addEventListener('load', async () => {
     let response = await axios.get('http://localhost:8001/expense/get-expenses', { headers: { 'Authorization': token } });
     try {
@@ -56,8 +57,10 @@ window.addEventListener('load', async () => {
     }
     catch (err) { console.log(err.message) }
 })
+// window reload section ENDs here
 
-// add expense to the backend
+
+// Expense Add section starts here (add expense to the backend)
 expForm.addEventListener('submit', async (e) => {
     // e.preventDefault();
     if (!expForm.checkValidity()) {
@@ -82,6 +85,7 @@ expForm.addEventListener('submit', async (e) => {
 })
 
 function showExpense(expenses) {
+    console.log('show expense :',expenses);
     if (expenses.success && expenses.data.length > 0) {
         const tr2 = document.createElement('tr')
         expenses.data.forEach((exp, index) => {
@@ -104,9 +108,9 @@ function showExpense(expenses) {
         <td colspan="4" class="ps-0 text-danger h4">&#8377;${totalExpenses}</td>`
         expenseBody.appendChild(tr2)
     }
-    // console.log('total exp :',total);
 }
 
+// edit saved expense 
 async function editData(e) {
     if (e.target.classList.contains('edit')) {
         if (e.target.innerHTML == 'Edit') {
@@ -135,6 +139,7 @@ async function editData(e) {
     }
 }
 
+// saved newly updated expense in backend
 async function saveData(e) {
     // Update new expense in DB 
     try {
@@ -155,6 +160,7 @@ async function saveData(e) {
     }
 }
 
+// delete saved expense
 async function deleteData(e) {
     if (e.target.classList.contains('delete')) {
         // delete expense from db and reload the page
@@ -168,6 +174,7 @@ async function deleteData(e) {
         window.location.reload()
     }
 }
+// Expense Add section ENDS here (add expense to the backend)
 
 function showError(element, errMsg) {
     element.innerHTML = errMsg;
@@ -178,7 +185,7 @@ function showError(element, errMsg) {
 }
 
 
-// premium user section
+// Premium user section start here
 // global variables
 const buyPremiumBtn = document.querySelector('#buy_premium');
 const leaderBoardBtn = document.querySelector('#leaderBoard')
@@ -270,3 +277,44 @@ generateReport.addEventListener('click', async () => {
         console.log('Error in generating report', error.response.data.err);
     }
 })
+// Premium user section ENDs here
+
+// Pagination section starts here
+const prev = document.querySelector('#prev');
+const curr = document.querySelector('#curr');
+const next = document.querySelector('#next');
+next.addEventListener('click', (e) => pagination(e, null, true));
+prev.addEventListener('click', (e) => pagination(e, true, null));
+
+
+async function pagination(e, pre, nex) {
+    e.preventDefault();
+    let currPage = curr.innerHTML
+    let response = await axios.get(`http://localhost:8001/expense/limited-expense?page=${currPage}`, { headers: { 'Authorization': token } });
+    console.log(response.data.data);
+    showExpense(response.data)
+
+    // PREVIOUS page condition
+    if (response.data.data.hasPrevPage || response.data.data.nextPage == 2) {
+        prev.classList.remove('disabled');
+        if (pre) {
+            curr.innerHTML = response.data.data.prevPage
+        }
+    }
+    if ((response.data.data.prevPage == 1 && response.data.data.currPage == 2) && pre) {
+        prev.classList.add('disabled');
+    }
+
+    // NEXT page condition
+    if (response.data.data.hasNextPage) {
+        next.classList.remove('disabled');
+        if (nex) {
+            curr.innerHTML = response.data.data.nextPage
+        }
+    }
+    if ((response.data.data.nextPage == response.data.data.lastPage) && nex) {
+        next.classList.add('disabled');
+    } else {
+        next.classList.remove('disabled');
+    }
+}

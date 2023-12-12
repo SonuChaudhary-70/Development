@@ -1,5 +1,7 @@
 const Expense = require('../model/expense');
 const Sequelize = require('../util/dbConfig');
+const { Op } = require("sequelize");
+
 
 exports.addExpense = async (req, res) => {
     const t = await Sequelize.transaction();
@@ -83,4 +85,58 @@ exports.deleteExpense = async (req, res) => {
         await t.rollback();
         return res.json({ success: false, Error: err })
     }
+}
+
+exports.getLimitedExpense = async (req, res) => {
+    console.log('req paginate :',req.paginate);
+    const expenses = req.paginate
+    try{
+        if(req.paginate){
+            res.status(200).json({ success: true, data: expenses})
+        }
+    }
+    catch(err){
+        res.status(401).json({ success: false, Error:err})
+    }
+}
+
+// my logic for pagination
+async function pagination() {
+    console.log('page number : ', req.query.page);
+    let page = req.query.page < 1 ? 1 : req.query.page;
+    const limitedExp = await Expense.findAll({
+        // where: { id: { [Op.between]: [page, ++page] } }
+        where: { id: { [Op.between]: [page, ++page] } }
+    });
+    let hasPrevPage
+    let hasNextPage
+    let currPage
+    let nextPage
+    let prevPage
+    console.log(page - 1);
+    if (limitedExp.length == 0 && page - 1 < 2) {
+        console.log('no expense');
+        hasPrevPage = false;
+        hasNextPage = false;
+    } else if (limitedExp.length < 2 || limitedExp.length == 0) {
+        hasNextPage = false;
+    } else {
+        hasPrevPage = limitedExp[0].id != 1 || limitedExp.length == 0
+        hasNextPage = limitedExp.length == 2
+        currPage = page - 1;
+        nextPage = currPage + 1;
+        prevPage = currPage - 1;
+        console.log('prev', prevPage);
+        console.log('curr', currPage);
+        console.log('next', nextPage);
+    }
+    res.status(200).json({
+        success: true,
+        expense: limitedExp,
+        hasPrevPage,
+        hasNextPage,
+        currPage,
+        nextPage,
+        prevPage
+    })
 }
