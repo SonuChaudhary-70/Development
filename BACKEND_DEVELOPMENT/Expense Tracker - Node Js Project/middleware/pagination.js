@@ -2,16 +2,17 @@ const Expense = require('../model/expense');
 
 // pagination function middleware
 exports.pagination = async (req, res, next) => {
-    let page = +req.query.page || 1;
-    let expense_per_page = 2
+
+    // let page = +req.query.page || 1;
+    let page = Number(+req.query.page || 1)
+    console.log('page number :', page);
+    let expense_per_page = 5
     try {
         let totalExpense = await Expense.count();
         const limitedExp = await Expense.findAll({
             offset: (page - 1) * expense_per_page,
             limit: expense_per_page
         })
-        console.log('page number :', page);
-        console.log('has previous page :', page > 1);
         req.paginate = {
             success: true,
             expense: limitedExp,

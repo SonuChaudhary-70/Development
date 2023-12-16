@@ -88,11 +88,11 @@ exports.deleteExpense = async (req, res) => {
 }
 
 exports.getLimitedExpense = async (req, res) => {
-    console.log('req paginate :',req.paginate);
+    // console.log('req paginate :',req.paginate);
     const expenses = req.paginate
     try{
         if(req.paginate){
-            res.status(200).json({ success: true, data: expenses})
+            res.status(200).json({ success: true, expenses})
         }
     }
     catch(err){

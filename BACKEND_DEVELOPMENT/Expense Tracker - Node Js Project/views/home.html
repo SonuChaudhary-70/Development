@@ -64,9 +64,9 @@
     <title>Expense Tracker</title>
 </head>
 
-<body style="background-color: #1b8381;">
+<body style="background-color: #1b8381;" class="px-2">
     <!-- Premium user Section and its features starts here -->
-    <span class="m-0 p-0 d-flex mt-2 ms-2 px-2">
+    <span class="m-0 p-0 d-flex mt-2">
         <h5 id="message" class="d-none">You are a premium user</h5>
         <button class="btn btn-dark ms-2" id="buy_premium">Buy Premium</button>
         <button class="btn btn-secondary ms-2 d-none" id="leaderBoard">Show Leaderboard</button>
@@ -75,7 +75,7 @@
     <!-- Premium user Section and its features ends here -->
 
     <!-- Add Expense Detail Section starts here -->
-    <div class="container-fluid mt-3">
+    <div class="container-fluid mt-3 p-0">
         <div class="row d-flex justify-content-center mx-0">
             <div class="col-lg-8 col-md-10 col-sm-12 bg-dark rounded border border-2 border-dark main">
                 <form class="p-2 needs-validation" id="form" novalidate>
@@ -202,11 +202,22 @@
             </div>
         </div>
     </div>
-    <div class="row bg-dange my-4 d-flex justify-content-center mx-0 px-2">
-        <div class="col-lg-8 col-md-10 col-sm-12">
+    <div class="row mt- mx-0">
+        <span class="rounded col-2 d-flex align-items-center bg-secondary h6 py-2">Show Expenses
+            <span class="mx-1">
+                <select name="Maximum Expenses" id="max-expenses"
+                    class="" required>
+                    <option value="empty"></option>
+                    <option value="five">5</option>
+                    <option value="ten">10</option>
+                    <option value="fifteen">15</option>
+                    <option value="Electronics">20</option>
+                </select>
+            </span> per page</span>
             <!-- pagination -->
+        <div class="col-lg-8 col-md-10 col-sm-12 p-0">
             <nav aria-label="..." class="d-flex justify-content-center">
-                <ul class="pagination">
+                <ul class="pagination d-flex align-items-center m-0">
                     <li class="page-item px-3" style="cursor:pointer"><a class="page-link disabled  rounded btn btn-outline-dark"
                             id="prev">Previous</a></li>
                     <li class="" aria-current="page"><a class="page-link border border-2 border-dark rounded-circle bg-primary text-light disabled" href="#" id="curr">1</a></li>

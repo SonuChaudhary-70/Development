@@ -7,6 +7,8 @@ const errDiv = document.querySelector('#errMsg')
 const expenseBody = document.querySelector('#expTabBody')
 const expenseDate = document.querySelector('#expense-date')
 const token = JSON.parse(localStorage.getItem('token'));
+const curr = document.querySelector('#curr');
+let currPage = curr.innerHTML;
 let totalExpenses = 0
 
 
@@ -42,9 +44,12 @@ expenseBody.addEventListener('click', editData);
 
 // window reload section starts here
 window.addEventListener('load', async () => {
-    let response = await axios.get('http://localhost:8001/expense/get-expenses', { headers: { 'Authorization': token } });
+    // let response = await axios.get('http://localhost:8001/expense/get-expenses', { headers: { 'Authorization': token } });
+    console.log('current page :', currPage);
+    let response = await axios.get(`http://localhost:8001/expense/limited-expense?page=${currPage}`, { headers: { 'Authorization': token } });
+    // console.log(response.data.expenses);
     try {
-        showExpense(response.data);
+        showExpense(response.data.expenses);
         const decodedToken = parseJwt(token);
         // console.log(decodedToken.isPremiumUser);
         if (decodedToken.isPremiumUser) {
@@ -85,10 +90,10 @@ expForm.addEventListener('submit', async (e) => {
 })
 
 function showExpense(expenses) {
-    console.log('show expense :',expenses);
-    if (expenses.success && expenses.data.length > 0) {
+    // console.log('show expense :',expenses);
+    if (expenses.success && expenses.expense.length > 0) {
         const tr2 = document.createElement('tr')
-        expenses.data.forEach((exp, index) => {
+        expenses.expense.forEach((exp, index) => {
             const tr1 = document.createElement('tr');
             const html = `
             <th scope="row">${index + 1}</th>
@@ -281,7 +286,7 @@ generateReport.addEventListener('click', async () => {
 
 // Pagination section starts here
 const prev = document.querySelector('#prev');
-const curr = document.querySelector('#curr');
+// const curr = document.querySelector('#curr');
 const next = document.querySelector('#next');
 next.addEventListener('click', (e) => pagination(e, null, true));
 prev.addEventListener('click', (e) => pagination(e, true, null));
@@ -289,30 +294,33 @@ prev.addEventListener('click', (e) => pagination(e, true, null));
 
 async function pagination(e, pre, nex) {
     e.preventDefault();
-    let currPage = curr.innerHTML
+    // let currPage = curr.innerHTML
+    // console.log('current page :', currPage);
     let response = await axios.get(`http://localhost:8001/expense/limited-expense?page=${currPage}`, { headers: { 'Authorization': token } });
-    console.log(response.data.data);
-    showExpense(response.data)
+    console.log(response.data.expenses);
+    // showExpense(response.data)
 
     // PREVIOUS page condition
-    if (response.data.data.hasPrevPage || response.data.data.nextPage == 2) {
+    if (response.data.expenses.hasPrevPage || response.data.expenses.nextPage == 2) {
         prev.classList.remove('disabled');
         if (pre) {
-            curr.innerHTML = response.data.data.prevPage
+            console.log('response in prev :', response.data.expenses);
+            curr.innerHTML = response.data.expenses.prevPage
         }
     }
-    if ((response.data.data.prevPage == 1 && response.data.data.currPage == 2) && pre) {
+    if ((response.data.expenses.prevPage == 1 && response.data.expenses.currPage == 2) && pre) {
         prev.classList.add('disabled');
     }
 
     // NEXT page condition
-    if (response.data.data.hasNextPage) {
+    if (response.data.expenses.hasNextPage) {
         next.classList.remove('disabled');
         if (nex) {
-            curr.innerHTML = response.data.data.nextPage
+            console.log('response in next :', response.data.expenses);
+            curr.innerHTML = response.data.expenses.nextPage;
         }
     }
-    if ((response.data.data.nextPage == response.data.data.lastPage) && nex) {
+    if ((response.data.expenses.nextPage == response.data.expenses.lastPage) && nex) {
         next.classList.add('disabled');
     } else {
         next.classList.remove('disabled');
