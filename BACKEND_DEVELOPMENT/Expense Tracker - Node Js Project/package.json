@@ -10,6 +10,7 @@
   "author": "Sonu Chaudhary",
   "license": "ISC",
   "dependencies": {
+    "autoprefixer": "^10.4.16",
     "aws-sdk": "^2.1510.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -21,6 +22,7 @@
     "mysql2": "^3.6.2",
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.1",
+    "postcss-cli": "^11.0.0",
     "razorpay": "^2.9.2",
     "sequelize": "^6.33.0",
     "sib-api-v3-sdk": "^4.0.0",

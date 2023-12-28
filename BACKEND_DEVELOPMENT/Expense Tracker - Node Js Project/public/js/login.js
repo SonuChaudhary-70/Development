@@ -1,14 +1,14 @@
 
 // Global variables or instances
-const loginForm = document.querySelector('#formData')
-const loginEmail = document.querySelector('#email');
-const loginPassword = document.querySelector('#password');
+const loginForm = document.querySelector('#login_form_data')
+const loginEmail = document.querySelector('#login_email');
+const loginPassword = document.querySelector('#Password');
 const loginBtn = document.querySelector('#login');
 const resetPasswordBtn = document.querySelector('#resetPassword');
 const resetPasswordEmail = document.querySelector('#typeEmail')
 let errDiv = document.querySelector('#errMsg');
 let userNotExistErr = document.querySelector('#userNotExistErr');
-let passErr = document.querySelector('#passErr');
+let passErr = document.querySelector('#login_pass_err');
 let forgotPassEmailErr = document.querySelector('#forgotPassEmail')
 
 loginForm.addEventListener('submit', async (e) => {
@@ -29,6 +29,7 @@ loginForm.addEventListener('submit', async (e) => {
             }
         }
         catch (err) {
+            console.log(err);
             if (err.response.status == 404) {
                 showError(userNotExistErr, "User not exist");
             } else {
@@ -56,12 +57,6 @@ resetPasswordBtn.addEventListener('click', async (e) => {
     let response = await axios.post('http://localhost:8001/password/forgot-password', { email: resetPasswordEmail.value }, { headers: { 'Authorization': token } });
     if (response.data.success) {
         alert(`Reset password email sent.You should soon receive an email allowing you to reset your password. Please make sure to check your spam and trash if you can't find the email.`)
-        // let forgot = document.getElementById('forgot');
-        // forgot.innerHTML = `Reset password email sent.
-        // You should soon receive an email allowing you to reset your password. Please make sure to check
-        // your spam and trash if you can't find the email.`
-        // to open bootstrap model we use Modal class of bootstrap in js as constructor
-        // new bootstrap.Modal(document.getElementById('linkSent')).show();
     } else {
         alert(response.data.message)
     }

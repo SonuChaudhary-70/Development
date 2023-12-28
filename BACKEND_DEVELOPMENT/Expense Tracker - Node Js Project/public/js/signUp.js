@@ -1,42 +1,18 @@
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-// this is Immediately Invoked Function Expression (IIFE) 
-(function () {
-    'use strict'
-
-    // Fetch all the forms we want to apply validation styles to
-    let forms = document.querySelectorAll('.needs-validation')
-
-    // Loop over them and prevent submission
-    // Array.prototype.slice.call(forms)
-    forms.forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-            // checkValidity method Returns true if an input element contains valid data.
-            if (!form.checkValidity()) {
-                event.preventDefault()
-                // stopPropagation() method prevents propagation of the same event from being called.
-                // matlab stop propagation method event to propagate or we can say execute karne se rok deta hai
-                event.stopPropagation()
-            }
-            form.classList.add('was-validated');
-            // false as an argument is liye pass kiye jisse capturing disable ho jaye
-            // capturing means event propagation from parent to child
-        }, false)
-    })
-})()
 
 // Global variables
 let inputs = document.getElementsByTagName('input');
-let passErr = document.querySelector("#passErr");
+let passwordErr = document.querySelector("#signUp_pass_err");
 let repeat = document.querySelector("#repeatPassErr");
 let userExistErr = document.querySelector("#userExist");
 
-
-document.getElementById('formData')
+document.getElementById('signup_formData')
     .addEventListener('submit', async (e) => {
         e.preventDefault()
 
         // check typed password match or not
         if (inputs[2].value != inputs[3].value) {
+            console.log(inputs[2]);
+            console.log(inputs[3]);
             inputs[2].style.backgroundImage = 'none'
             inputs[3].style.backgroundImage = 'none'
             showError(passErr, 'Password did not matched')
@@ -70,7 +46,7 @@ function showError(element, errMsg) {
     }, 2000)
 }
 
-document.getElementById('email')
+document.getElementById('signUp_email')
     .addEventListener('change', async function (e) {
         try {
             let response = await axios.post(`http://localhost:8001/user/${e.target.value}`);

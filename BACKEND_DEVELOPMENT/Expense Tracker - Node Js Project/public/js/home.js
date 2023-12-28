@@ -7,8 +7,7 @@ const errDiv = document.querySelector('#errMsg')
 const expenseBody = document.querySelector('#expTabBody')
 const expenseDate = document.querySelector('#expense-date')
 const token = JSON.parse(localStorage.getItem('token'));
-const curr = document.querySelector('#curr');
-let currPage = curr.innerHTML;
+
 let totalExpenses = 0
 
 
@@ -44,12 +43,12 @@ expenseBody.addEventListener('click', editData);
 
 // window reload section starts here
 window.addEventListener('load', async () => {
+    const page = 1
     // let response = await axios.get('http://localhost:8001/expense/get-expenses', { headers: { 'Authorization': token } });
-    console.log('current page :', currPage);
-    let response = await axios.get(`http://localhost:8001/expense/limited-expense?page=${currPage}`, { headers: { 'Authorization': token } });
-    // console.log(response.data.expenses);
+    let response = await axios.get(`http://localhost:8001/expense/limited-expense?page=${page}`, { headers: { 'Authorization': token } });
     try {
-        showExpense(response.data.expenses);
+        showExpense(response.data.expenses.expense);
+        updatePageNumber(response.data.expenses)
         const decodedToken = parseJwt(token);
         // console.log(decodedToken.isPremiumUser);
         if (decodedToken.isPremiumUser) {
@@ -91,12 +90,13 @@ expForm.addEventListener('submit', async (e) => {
 
 function showExpense(expenses) {
     // console.log('show expense :',expenses);
-    if (expenses.success && expenses.expense.length > 0) {
+    // if (expenses.success && expenses.expense.length > 0) {
+    if (expenses.length > 0) {
         const tr2 = document.createElement('tr')
-        expenses.expense.forEach((exp, index) => {
+        expenses.forEach((exp, index) => {
             const tr1 = document.createElement('tr');
             const html = `
-            <th scope="row">${index + 1}</th>
+            <th scope="row">${exp.id}</th>
             <td>${exp.description}</td>
             <td>${exp.category}</td>
             <td>${exp.date}</td>
@@ -286,43 +286,39 @@ generateReport.addEventListener('click', async () => {
 
 // Pagination section starts here
 const prev = document.querySelector('#prev');
-// const curr = document.querySelector('#curr');
+const currBtn = document.querySelector('#curr');
 const next = document.querySelector('#next');
-next.addEventListener('click', (e) => pagination(e, null, true));
-prev.addEventListener('click', (e) => pagination(e, true, null));
 
-
-async function pagination(e, pre, nex) {
-    e.preventDefault();
-    // let currPage = curr.innerHTML
-    // console.log('current page :', currPage);
-    let response = await axios.get(`http://localhost:8001/expense/limited-expense?page=${currPage}`, { headers: { 'Authorization': token } });
-    console.log(response.data.expenses);
-    // showExpense(response.data)
-
-    // PREVIOUS page condition
-    if (response.data.expenses.hasPrevPage || response.data.expenses.nextPage == 2) {
+async function updatePageNumber({ expense, hasPrevPage, hasNextPage, nextPage, prevPage, currPage }) {
+    // previous page condition
+    if (hasPrevPage) {
         prev.classList.remove('disabled');
-        if (pre) {
-            console.log('response in prev :', response.data.expenses);
-            curr.innerHTML = response.data.expenses.prevPage
+        prev.addEventListener('click', () => {
+            console.log('prev page number :', prevPage);
+            currBtn.innerHTML = prevPage;
+            getExpense(prevPage)
         }
+        )
     }
-    if ((response.data.expenses.prevPage == 1 && response.data.expenses.currPage == 2) && pre) {
-        prev.classList.add('disabled');
+    // current page condition
+    currBtn.innerHTML = currPage
+    // showExpense(expense);
+    // next page condition
+    if (hasNextPage) {
+        next.classList.remove('disabled');
+        next.addEventListener('click', (e) => {
+            e.preventDefault();
+            currBtn.innerHTML = nextPage;
+            getExpense(nextPage);
+        })
     }
+}
 
-    // NEXT page condition
-    if (response.data.expenses.hasNextPage) {
-        next.classList.remove('disabled');
-        if (nex) {
-            console.log('response in next :', response.data.expenses);
-            curr.innerHTML = response.data.expenses.nextPage;
-        }
-    }
-    if ((response.data.expenses.nextPage == response.data.expenses.lastPage) && nex) {
-        next.classList.add('disabled');
-    } else {
-        next.classList.remove('disabled');
-    }
+async function getExpense(page) {
+    expenseBody.innerHTML = ''
+    console.log(page);
+    let response = await axios.get(`http://localhost:8001/expense/limited-expense?page=${page}`, { headers: { 'Authorization': token } });
+    // console.log('expenses :', response.data.expenses);
+    showExpense(response.data.expenses.expense);
+    updatePageNumber(response.data.expenses)
 }

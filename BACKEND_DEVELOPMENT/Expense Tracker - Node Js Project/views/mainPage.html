@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/mainPage.css">
+    <!-- <script src="/js/jquery3.1.0.min.js"></script>
+    <script src="/js/jquery.modal.min.js"></script> -->
+    <title>Expense Tracker</title>
+</head>
+
+<body class="bg-dark">
+
+    <!-- NAVBAR section STARTs here  -->
+    <div class="flex flex-wrap place-items-center ">
+        <section class="relative mx-auto">
+            <!-- navbar -->
+            <nav class="flex justify-between bg-gray-900 text-white w-screen">
+                <div class="px-5 xl:px-12 py-6 flex w-full items-center">
+                    <a class="text-3xl font-bold font-heading text-warning" href="#">
+                        <!-- <img class="h-9" src="logo.png" alt="logo"> -->
+                        Expense Tracker
+                    </a>
+                    <!-- Nav Links -->
+                    <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+                        <li><a class="hover:text-gray-200" href="#">Home</a></li>
+                        <li><a class="hover:text-gray-200" href="#">About Us</a></li>
+                        <li><a class="hover:text-gray-200" href="#">Contact Us</a></li>
+                    </ul>
+                    <!-- Header Icons -->
+                    <div class="hidden md:flex items-center space-x-5 items-center" type="button"
+                        data-bs-target="#login-modal" data-bs-toggle="modal" data-bs-dismiss="modal">
+                        <button class="btn btn-warning">Login</button>
+                    </div>
+                </div>
+                <!-- Responsive navbar -->
+                <a class="navbar-burger self-center mr-12 md:hidden" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </a>
+                <button class="btn btn-light my-4 me-5 h-10 closeBtn d-none md:hidden">X</button>
+            </nav>
+            <div class="me-2 rounded d-flex justify-content-end">
+                <ul
+                    class="dropdown d-none flex-column backdrop-blur-sm position-absolute bg-white/10  p-2 rounded border w-28">
+                    <li><a class="hover:text-gray-200" href="#">Home</a></li>
+                    <li><a class="hover:text-gray-200" href="#">About Us</a></li>
+                    <li><a class="hover:text-gray-200" href="#">Contact Us</a></li>
+                    <button class="btn btn-warning my-1">Login</button>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+    <!-- NAVBAR section ENDs here  -->
+
+    <!-- MAIN BODY fo Home PAGE STARTs here -->
+    <div class="container-fluid my-20 lg:px-32 md:px-1">
+        <div class="row d-lg-flex justify-content-lg-between ">
+            <div class="col-md-6 p-0">
+                <!-- <div class="bg-image" style="background-image: url('')"></div> -->
+                <img src="/images/exp1.png" alt="" class="img-fluid h-100" id="primary">
+            </div>
+            <div class="col-md-6 lg:px-20 sm:px-8 sm:py-20 text-light d-flex flex-column justify-content-center">
+                <h1 class="h1">The <span class="text-warning">Expense Tracker</span> <br>that works for you</h1>
+                <p class="lead">Track all your expense here</p>
+                <div class="py-2">
+                    <button class="btn btn-primary btn-lg xl:w-40" data-bs-toggle="modal" data-bs-target="#signUp-modal"
+                        data-bs-dismiss="modal">Let's
+                        Start</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MAIN BODY for Home PAGE ENDs here -->
+
+    <!-- footer section STARTs here -->
+    <div class="container-fluid ">
+        <footer class="bg-warning fixed-bottom text-black h5 m-0">
+            <!-- Footer Content Here -->
+            <div class="container text-center m-0">
+                <p>&copy; 2023 Sonu Chaudhary PvtLtd. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <!-- footer section ENDs here -->
+
+
+    <!-- forgot password modal STARTs here -->
+    <div class="modal fade" id="forgot-password-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light" id="test056">
+                <!-- <div class="contact_form"> -->
+                <div class="modal-header py-2 ps-0">
+                    <p class="h2 text-warning">Forgot Password</p>
+                    <!-- <h2 class="h2">Forgot <span>Password</span></h2> -->
+                    <button class="btn-close btn btn-danger text-light d-flex justify-content-center align-items-center"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="body py-2">
+                    <p class="password_info">
+                        Please enter you email id below, we will send you the link to reset your password
+                    </p>
+                    <div class="contact_input py-2">
+                        <p class="py-1">Your Email Address</p>
+                        <input type="text" class="form_input h-8 w-100 rounded text-black px-1" id="typeEmail" placeholder="Enter your email address">
+                    </div>
+                </div>
+                <div class="cta_group modal-footer d-flex justify-content-start  p-0">
+                    <a class="btn btn-warning mt-3 w-100" id="resetPassword">Reset Password</a>
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+        <!-- forgot password modal ENDs here -->
+
+    <!-- signup modal STARTs here -->
+    <div class="modal fade" id="signUp-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header ps-0">
+                    <h5 class="modal-title text-center h2 text-warning">Sign Up</h5>
+                    <button type="button"
+                        class="btn-close btn btn-danger  d-flex justify-content-center align-items-center"
+                        data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <form id="signup_formData" class="needs-validation">
+                    <div class="inputs p-0">
+
+                        <div class="form-outline mb-3 mt-2 position-relative">
+                            <label for="Username">Username<span class="text-danger"> *</span></label>
+                            <input type="text" id="Username" class="form-control form-control border border-dark"
+                                placeholder='Enter Your Name' autocomplete="off" required>
+                            <div class="invalid-tooltip">
+                                Please enter username.
+                            </div>
+                        </div>
+
+                        <div class="form-outline mb-4 position-relative">
+                            <label for="signUp_email">Email<span class="text-danger"> *</span></label>
+                            <input type="email" id="signUp_email" class="form-control form-control border border-dark"
+                                placeholder='Enter Your Email' required />
+                            <div class="d-none ps-3 invalid-tooltip" id="userExist">
+                                User with this email already exists
+                            </div>
+                            <div class="invalid-tooltip">
+                                Please enter valid email.
+                            </div>
+                        </div>
+
+                        <div class="form-outline mb-4 position-relative">
+                            <label for="Username">Password<span class="text-danger"> *</span></label>
+                            <input type="password" id="password" class="form-control form-control border border-dark"
+                                placeholder='Create Your Password' required autocomplete="off" />
+                            <div class="invalid-tooltip">
+                                Please enter password.
+                            </div>
+                            <div class="d-none invalid-tooltip" id="signUp_pass_err">
+                                Password did not match
+                            </div>
+                        </div>
+
+                        <div class="form-outline mb-4 position-relative">
+                            <label for="Username">Confirm Password<span class="text-danger"> *</span></label>
+                            <input type="Password" id="repeated-password"
+                                class="form-control form-control  border border-dark"
+                                placeholder='Re-enter Your Password' required />
+                            <div class="invalid-tooltip">
+                                Please re-enter password.
+                            </div>
+                            <div class="d-none invalid-tooltip" id="repeatPassErr">Password did not match
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer register d-flex justify-content-center my-4 px-0">
+                        <button type="submi" id="submitForm" class="btn btn-warning w-100">Sign Up</button>
+                    </div>
+                    <p class="d-flex justify-content-center">Have already an account? <a
+                            class="ms-1 open-modal text-warning cursor-pointer" data-bs-target="#login-modal"
+                            data-bs-toggle="modal">Login</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+        <!-- signup modal ENDs here -->
+
+    <!-- Login Modal STARTs here -->
+    <div class="modal fade" id="login-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light">
+                <form action="" class="" id="login_form_data">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center h2 text-warning">Login</h5>
+                        <button type="button"
+                            class="btn-close btn btn-danger text-light d-flex justify-content-center align-items-center"
+                            data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="login_email" class="form-label">Email<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control" id="login_email" placeholder="Enter Your Email"
+                                required>
+                            <div class="d-none align-self-start invalid-feedback" id="userNotExistErr">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Password" class="form-label">Password<span class="text-danger"> *</span></label>
+                            <input type="password" name="password" class="form-control" id="Password"
+                                placeholder="Enter Your Password" required>
+                            <div class="d-none align-self-start invalid-feedback" id="login_pass_err">
+                            </div>
+                            <a href="#forgot-password-modal" class="open-modal forgot_password text-warning"
+                                data-bs-toggle="modal" data-bs-dismiss="modal">
+                                Forgot Password ?
+                            </a>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="butto" class="btn btn-warning mx-auto w-100">Login</button>
+                        </div>
+                        <p class="text-center">Not yet account? <a href="#signUp-modal"
+                                class="ms-1 open-modal text-warning" data-bs-target="#signUp-modal"
+                                data-bs-toggle="modal">Sign Up</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Login Modal ENDs here -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="/js/jquery3.1.0.min.js"></script>
+    <script src="/js/jquery.modal.min.js"></script>
+    <script src="/js/mainPage.js"></script>
+    <script src="/js/signUp.js"></script>
+    <!-- <script src="/js/login.js"></script> -->
+
+</body>
+
+</html>

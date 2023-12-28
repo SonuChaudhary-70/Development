@@ -15,7 +15,7 @@ exports.login = async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' })
         }
-        // user found now validate the user
+        // user found now validate the user by the password he/she entered
         let isValidUser = await bcrypt.compare(password, user.password);
         if (!isValidUser) {
             return res.status(401).json({ success: false, message: 'Password not correct' })

@@ -11,54 +11,13 @@
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
 
     <style>
         label {
             letter-spacing: 2px;
         }
-        /* ======================= PAGE-ITEM BUTTON ========================*/ 
-        /* .page-item { 
-            color: #FFF;
-            transition: all 0.5s;
-            position: relative;
-        }
-
-        .page-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-        }
-
-        .page-item:hover::before {
-            opacity: 0;
-            transform: scale(0.5, 0.5);
-        }
-
-        .page-item::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            opacity: 0;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transform: scale(1.2, 1.2);
-        }
-
-        .page-item:hover::after {
-            opacity: 1;
-            transform: scale(1, 1);
-        } */
     </style>
 
     <title>Expense Tracker</title>
@@ -202,11 +161,11 @@
             </div>
         </div>
     </div>
+    <!-- Dynamic Pagination -->
     <div class="row mt- mx-0">
         <span class="rounded col-2 d-flex align-items-center bg-secondary h6 py-2">Show Expenses
             <span class="mx-1">
-                <select name="Maximum Expenses" id="max-expenses"
-                    class="" required>
+                <select name="Maximum Expenses" id="max-expenses" class="" required>
                     <option value="empty"></option>
                     <option value="five">5</option>
                     <option value="ten">10</option>
@@ -214,19 +173,23 @@
                     <option value="Electronics">20</option>
                 </select>
             </span> per page</span>
-            <!-- pagination -->
+        <!-- Pagination Section start here -->
         <div class="col-lg-8 col-md-10 col-sm-12 p-0">
             <nav aria-label="..." class="d-flex justify-content-center">
                 <ul class="pagination d-flex align-items-center m-0">
-                    <li class="page-item px-3" style="cursor:pointer"><a class="page-link disabled  rounded btn btn-outline-dark"
-                            id="prev">Previous</a></li>
-                    <li class="" aria-current="page"><a class="page-link border border-2 border-dark rounded-circle bg-primary text-light disabled" href="#" id="curr">1</a></li>
-                    <!-- <li class="page-item border border-2 px-2 d-flex  align-items-center rounded-circle bg-primary fs-5"
-                        aria-current="page" id="curr">1</li> -->
-                    <li class="page-item px-3"><a class="page-link rounded btn btn-outline-dark " role="button" href="" id="next">Next</a></li>
+                    <li class="page-item px-3" style="cursor:pointer"><a
+                            class="page-link disabled rounded btn btn-outline-dark" id="prev">Previous</a></li>
+                    <li class="" aria-current="page"><a
+                            class="page-link border border-2 border-dark rounded-circle bg-secondary text-light disabled"
+                            href="#" id="curr">1</a></li>
+                    <li class="page-item px-3"><a class="page-link disabled rounded btn btn-outline-dark " role="button" href="#"
+                            id="next">Next</a></li>
                 </ul>
             </nav>
         </div>
+        <!-- <div class="col-lg-8">
+            <div class="d-flex justify-content-center" id="pagination"></div>
+        </div> -->
     </div>
     <script src="/js/home.js"></script>
     <!-- bootstrap cdn CSS link -->
@@ -240,7 +203,9 @@
         axios cdn link -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
     <!-- razorpay cdn link -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 </body>
 
 </html>
