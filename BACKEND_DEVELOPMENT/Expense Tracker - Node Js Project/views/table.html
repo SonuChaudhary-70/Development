@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <title>Expense Tracker</title>
+</head>
+
+<body class="bg-dark">
+
+    <!-- ======================== Sidebar Section Starts here ======================== -->
+    <aside id="logo-sidebar"
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        aria-label="Sidebar">
+        <div class="h-full px-3 pt-2 pb-4 overflow-y-auto bg-white dark:bg-gray-800 flex flex-col justify-between">
+            <ul class="space-y-2 font-medium">
+                <li>
+                    <a href="#"
+                        class="flex items-center p-2 text-black hover:bg-blue-300 rounded-lg hover:text-gray-900 dark:text-white bg-green-400 dark:hover:bg-gray-700 group">
+                        <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor" viewBox="0 0 22 21">
+                            <path
+                                d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+                            <path
+                                d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+                        </svg>
+                        <span class="ms-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <button data-modal-target="add-expense-modal" data-modal-toggle="add-expense-modal"
+                        class="d-flex px-2 align-items-center text-black bg-green-400 hover:bg-blue-300 font-semibold rounded-lg text-md py-2 w-100"
+                        type="button">
+                        <svg class="me-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        Add Expense
+                    </button>
+                </li>
+            </ul>
+            <div>
+                <!-- <button type="button" class="btn w-100 bg-green-400 hover:bg-yellow-500 font-semibold transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+                    Add Expense
+                </button> -->
+            </div>
+        </div>
+    </aside>
+    <!-- ======================== Sidebar Section Starts here ======================== -->
+
+    <!-- ======================== Main Body Content Section Starts here ======================== -->
+    <div class="p-2 sm:ml-64">
+        <div class="p-4  border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+            <!-- ======================== Expense Table Starts Here ======================== -->
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="p-4">
+                                <div class="serial-number">S.No</div>
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Expense Description
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Category
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Date
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Price
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="w-4 p-4">
+                            </td>
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Apple MacBook Pro 17"
+                            </th>
+                            <td class="px-6 py-4">
+                                Silver
+                            </td>
+                            <td class="px-6 py-4">
+                                Laptop
+                            </td>
+                            <td class="px-6 py-4">
+                                $2999
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="#"
+                                    class="btn border btn-warning font-medium text-blue-600 dark:text-blue-500 px-2 hover:underline">Edit</a>
+                                <a href="#"
+                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline ">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- pagination -->
+            <footer class="flex items-center mt-4 flex-wrap md:flex-row justify-between px-2"
+                aria-label="Table navigation">
+                <span
+                    class="text-sm font-normal text-gray-500 dark:text-gray-400 md:mb-0 block w-full md:inline md:w-auto">Showing
+                    <span class="font-semibold text-white">
+
+                        <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover"
+                            data-dropdown-trigger="hover"
+                            class="text-black bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center inline-flex items-center"
+                            type="button">5<svg class="w-2 h-2.5 ms-2" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 4 4 4-4" />
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown menu -->
+                        <div id="dropdownHover"
+                            class="z-10 hidden bg-gray-900 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-100 dark:text-gray-200"
+                                aria-labelledby="dropdownHoverButton">
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">5</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">10</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">15</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </span> of <span class="font-semibold text-white ">100</span></span>
+                <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                    <li>
+                        <a href="#"
+                            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                    </li>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                    </li>
+                </ul>
+            </footer>
+            <!-- ======================== Expense Table Ends Here ======================== -->
+        </div>
+    </div>
+    
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-md text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <!-- Table Header Starts here -->
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Total Expense</th>
+                </tr>
+            </tr>
+        </thead>
+        <!-- Table Header Ends here -->
+        <!-- table body start here -->
+        <tbody id="leaderTabBody">
+        </tbody>
+    </table>
+</div>
+
+    <!-- ======================== Main Body Content Section Ends here ======================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="/js/home.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+<div class="w-lg mt-3 border border-danger  bg-white rounded-lg shadow h-25 p-4 md:p-6">
+
+    <div class="grid py-3">
+        <dl>
+            <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Total Expenses</dt>
+            <dd class="leading-none text-xl font-bold text-red-600 dark:text-red-500" id="total_exp">
+            </dd>
+        </dl>
+    </div>
+
+    <div id="bar-chart" class=""></div>
+    <div class=" grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+        <div class="flex justify-between items-center pt-2">
+            Button -->
+            <!-- <button id="dropdownDefaultButton" data-dropdown-toggle="lastDaysdropdown"
+                data-dropdown-placement="bottom"
+                class="text-sm font-medium text-gray-700 hover:text-gray-900 text-center inline-flex items-center"
+                type="button"> Last 6 months
+                <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" d="m1 1 4 4 4-4" />
+                </svg>
+            </button> -->
+            <!-- Dropdown menu -->
+            <!-- <div id="lastDaysdropdown"
+                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="dropdownDefaultButton">
+                    <li>
+                        <a href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last
+                            7 days</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last
+                            30 days</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last
+                            90 days</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last
+                            6 months</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last
+                            year</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> -->

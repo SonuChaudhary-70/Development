@@ -14,7 +14,7 @@ router.get('/signUp', (req, res) => {
 })
 
 router.get('/homePage', (req, res) => {
-    res.sendFile('home.html', { root: 'views' })
+    res.sendFile('homePage.html', { root: 'views' })
 });
 
 router.get('/report', (req, res) => {

@@ -1,45 +1,16 @@
 // Global variables
-const expForm = document.querySelector('#form')
-const amount = document.querySelector('#amount')
-const description = document.querySelector('#description')
-const category = document.querySelector('#expense-category')
-const errDiv = document.querySelector('#errMsg')
-const expenseBody = document.querySelector('#expTabBody')
-const expenseDate = document.querySelector('#expense-date')
+const expForm = document.querySelector('#expense-form')
+const expenseBody = document.querySelector('#exp_table_body')
+const exp_price = document.querySelector('#exp_price')
+const exp_description = document.querySelector('#exp_desc')
+const exp_category = document.querySelector('#exp_desc')
+const exp_date = document.querySelector('#exp_date_picker')
 const token = JSON.parse(localStorage.getItem('token'));
 
 let totalExpenses = 0
-
-
 // add event handlers to expense table
-expenseBody.addEventListener('click', deleteData);
 expenseBody.addEventListener('click', editData);
-
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-// this is Immediately Invoked Function Expression (IIFE) 
-(function () {
-    'use strict'
-
-    // Fetch all the forms we want to apply validation styles to
-    let forms = document.querySelectorAll('.needs-validation')
-
-    // Loop over them and prevent submission
-    // Array.prototype.slice.call(forms)
-    forms.forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-            // checkValidity method Returns true if an input element contains valid data.
-            if (!form.checkValidity()) {
-                event.preventDefault()
-                // stopPropagation() method prevents propagation of the same event from being called.
-                // matlab stop propagation method event to propagate or we can say execute karne se rok deta hai
-                event.stopPropagation()
-            }
-            form.classList.add('was-validated');
-            // false as an argument is liye pass kiye jisse capturing disable ho jaye
-            // capturing means event propagation from parent to child
-        }, false)
-    })
-})()
+expenseBody.addEventListener('click', deleteData);
 
 // window reload section starts here
 window.addEventListener('load', async () => {
@@ -48,18 +19,19 @@ window.addEventListener('load', async () => {
     let response = await axios.get(`http://localhost:8001/expense/limited-expense?page=${page}`, { headers: { 'Authorization': token } });
     try {
         showExpense(response.data.expenses.expense);
-        updatePageNumber(response.data.expenses)
+        showBarChart();
+        // updatePageNumber(response.data.expenses)
         const decodedToken = parseJwt(token);
         // console.log(decodedToken.isPremiumUser);
         if (decodedToken.isPremiumUser) {
-            document.getElementById('buy_premium').classList.add('d-none');
-            document.getElementById('message').classList.remove('d-none')
-            document.getElementById('leaderBoard').classList.remove('d-none');
-            document.getElementById('generateReport').classList.remove('d-none');
-            showLeaderBoard()
+            document.getElementById('buy_premium').classList.add('disabled');
+            document.getElementById('user_type').innerHTML = 'Premium user';
+            document.getElementById('prem_user_ic').classList.remove('d-none')
+            document.getElementById('leaderBoard').classList.remove('disabled');
+            document.getElementById('generateReport').classList.remove('disabled');
         }
     }
-    catch (err) { console.log(err.message) }
+    catch (err) { console.log(err) }
 })
 // window reload section ENDs here
 
@@ -73,10 +45,10 @@ expForm.addEventListener('submit', async (e) => {
     else {
         // create expense object to store in db
         let expense = {
-            Amount: amount.value,
-            Description: description.value,
-            Category: category.value,
-            date: expenseDate.value
+            Amount: exp_price.value,
+            Description: exp_description.value,
+            Category: exp_category.value,
+            date: exp_date.value
         }
         try {
             let response = await axios.post('http://localhost:8001/expense/add-expense', expense, { headers: { 'Authorization': token } });
@@ -89,28 +61,37 @@ expForm.addEventListener('submit', async (e) => {
 })
 
 function showExpense(expenses) {
-    // console.log('show expense :',expenses);
     // if (expenses.success && expenses.expense.length > 0) {
     if (expenses.length > 0) {
-        const tr2 = document.createElement('tr')
+        const tr2 = document.createElement('tr');
         expenses.forEach((exp, index) => {
             const tr1 = document.createElement('tr');
-            const html = `
-            <th scope="row">${exp.id}</th>
-            <td>${exp.description}</td>
-            <td>${exp.category}</td>
-            <td>${exp.date}</td>
-            <td>${exp.amount}</td>
-            <td>
-            <button type="button" class="btn btn-outline-warning btn-sm edit text-dark" id="${exp.id}">Edit</button>
-            <button type="button" onclick="${deleteData}" class="btn btn-outline-danger btn-sm ms-2 delete text-dark" id="${exp.id}">Delete</button>
+            tr1.className = 'bg-gray-50 border-b hover:bg-blue-100'
+            let html = `
+            <td class="lg:px-6 sm:px-2 lg:py-3 sm:py-1">${index + 1}
+            </td>
+            <th scope="row" class="lg:px-6 sm:px-2 lg:py-3 sm:py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                ${exp.description}
+            </th>
+            <td class="lg:px-6 sm:px-2 lg:py-3 sm:py-1">
+                ${exp.category}
+            </td>
+            <td class="lg:px-6 sm:px-2 lg:py-3 sm:py-1">
+                ${exp.date}
+            </td>
+            <td class="lg:px-6 sm:px-2 lg:py-3 sm:py-1">
+                ${exp.amount}
+            </td>
+            <td class="lg:px-6 sm:px-2 lg:py-3 sm:py-1 lg: md:px-2">
+                <button type="" data-modal-target="add_expense_modal" data-modal-toggle="add_expense_modal" class="btn btn-outline-warning btn-sm edit text-dark" id="${exp.id}">Edit</button>
+                <button type="button" class="btn btn-outline-danger btn-sm xl:ms-2 sm:mt-1 md:mt-0.5 delete text-dark" id="${exp.id}">Delete</button>
             </td>`
             tr1.innerHTML = html;
             expenseBody.appendChild(tr1)
             totalExpenses += exp.amount
         })
-        tr2.innerHTML = `<th scope="row" colspan="2" class="pe-0">Total Expenses (INR)&nbsp;:
-        <td colspan="4" class="ps-0 text-danger h4">&#8377;${totalExpenses}</td>`
+        tr2.innerHTML = `<th scope="row" colspan="4" class="h4 px-4 text-black py-2 bg-gray-300">Total Expenses (INR)&nbsp;:
+        <td colspan="2" class="ps-2 border-s border-s-2 text-black h3 bg-gray-300">&#8377;${totalExpenses}</td>`
         expenseBody.appendChild(tr2)
     }
 }
@@ -120,17 +101,28 @@ async function editData(e) {
     if (e.target.classList.contains('edit')) {
         if (e.target.innerHTML == 'Edit') {
             // focus on first input elements
-            document.getElementById('amount').focus()
-
+            const addModal = document.getElementById('add_expense_modal')
+            const targetBtn = document.getElementById(e.target.id);
+            // const targetModal = new modal('#addModal');
+            $(document).ready(function () {
+                // Get the modal element
+                var modal = $('#add_expense_modal');
+                // Add a click event listener to the button
+                $(targetBtn).click(function () {
+                    console.log('enter');
+                    // Show the modal
+                    modal.modal('show');
+                });
+            });
             // get expense data from DB and fill all input field with the expense
             let savedExp = await axios.get(`http://localhost:8001/expense/get-expense/${e.target.id}`, { headers: { 'Authorization': token } });
             try {
                 if (savedExp.data.success) {
                     // fill the expense detail in input field with stored expense in db
-                    amount.value = savedExp.data.expense[0].amount;
-                    description.value = savedExp.data.expense[0].description;
-                    category.value = savedExp.data.expense[0].category;
-                    expenseDate.value = savedExp.data.expense[0].date;
+                    exp_price.value = savedExp.data.expense[0].amount;
+                    exp_description.value = savedExp.data.expense[0].description;
+                    exp_category.value = savedExp.data.expense[0].category;
+                    exp_date.value = savedExp.data.expense[0].date;
                     // change edit button to save button after edit the expense
                     e.target.innerHTML = 'Save'
                 }
@@ -146,27 +138,30 @@ async function editData(e) {
 
 // saved newly updated expense in backend
 async function saveData(e) {
+    e.preventDefault();
     // Update new expense in DB 
     try {
         let updatedExpense = {
-            Expense_Amount: amount.value,
-            Description: description.value,
-            Category: category.value,
-            date: expenseDate.value
+            Expense_Amount: exp_price.value,
+            Description: exp_description.value,
+            Category: exp_category.value,
+            date: exp_date.value
         }
         await axios.put(`http://localhost:8001/expense/update-expense/${e.target.id}`, updatedExpense, { headers: { 'Authorization': token } });
         // change save button to edit button after update the expense and reload the page
         e.target.innerHTML = 'Edit'
-        window.location.reload()
+        // window.location.reload()
     }
     catch (err) {
         console.log('Error while updating expense :', err);
-        showError(errDiv, 'Something went wrong. Please update or add the expense again. 😁')
+        // showError(errDiv, 'Something went wrong. Please update or add the expense again. 😁')
     }
 }
 
 // delete saved expense
 async function deleteData(e) {
+    e.preventDefault()
+    console.log('delete');
     if (e.target.classList.contains('delete')) {
         // delete expense from db and reload the page
         try {
@@ -189,12 +184,12 @@ function showError(element, errMsg) {
     }, 3000)
 }
 
-
 // Premium user section start here
 // global variables
 const buyPremiumBtn = document.querySelector('#buy_premium');
 const leaderBoardBtn = document.querySelector('#leaderBoard')
-const leaderTableBody = document.querySelector('#leaderTabBody');
+// const leaderTableBody = document.querySelector('#leaderTabBody');
+const leaderTableBody = document.querySelector('#leader_table');
 const generateReport = document.querySelector('#generateReport');
 
 // add event handlers 
@@ -204,13 +199,18 @@ leaderBoardBtn.addEventListener('click', showLeaderBoard);
 
 async function showLeaderBoard() {
     let allUserTotalExpense = await axios.get('http://localhost:8001/premium/update-leaderBoard', { headers: { 'Authorization': token } });
-    allUserTotalExpense.data.totalAmount.forEach((exp) => {
+    allUserTotalExpense.data.totalAmount.forEach((exp, index) => {
         const tr = document.createElement('tr');
+        tr.className = 'bg-gray-200 border-b hover:bg-blue-200'
+        const html2 = `                                    
+        <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${index + 1}</th>
+        <td class="px-6 py-3 text-gray-900">${exp.User.username}</td>
+        <td class="px-6 py-3 text-gray-900">${exp.total_amount}</td>`
         const html = `
         <td>1</td>
         <td>${exp.User.username}</td>
         <td>${exp.total_amount}</td>`
-        tr.innerHTML = html;
+        tr.innerHTML = html2;
         leaderTableBody.appendChild(tr)
     })
     // leaderBoardBtn.removeEventListener('click', showLeaderBoard);
@@ -321,4 +321,227 @@ async function getExpense(page) {
     // console.log('expenses :', response.data.expenses);
     showExpense(response.data.expenses.expense);
     updatePageNumber(response.data.expenses)
+}
+
+// SIDE BAR FUNCTIONALITY
+const dashboard = document.querySelector('#dashboard')
+const dashboardTarget = document.querySelector('#dashboardDiv')
+const analysis = document.querySelector('#analysis');
+const analysisTarget = document.querySelector('#analysisDiv');
+const addExpense = document.querySelector('#addExpense')
+
+analysis.addEventListener('click', (e) => {
+    // analysisTarget.classList.remove('d-none');
+    analysisTarget.classList.replace('d-none','d-flex');
+    dashboardTarget.classList.add('d-none');
+})
+
+addExpense.addEventListener('click', showData)
+dashboard.addEventListener('click', showData)
+
+function showData() {
+    dashboardTarget.classList.remove('d-none');
+    analysisTarget.classList.replace('d-flex','d-none');
+}
+
+function showBarChart1() {
+    console.log('total :', totalExpenses);
+    var options = {
+        series: [
+            // {
+            //     name: "Income",
+            //     color: "#31C48D",
+            //     data: ["1420", "1620", "1820", "1420", "1650", "2120","3000"],
+            // },
+            {
+                name: "Expense",
+                data: ["788", "810", "741", "788", "1100", "1200", "1452"],
+                color: "#F05252",
+            }
+        ],
+        chart: {
+            sparkline: {
+                enabled: false,
+            },
+            type: "bar",
+            width: "50%",
+            height: 'auto',
+            toolbar: {
+                show: false,
+            },
+        },
+        fill: {
+            opacity: 1,
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                vertical: true,
+                columnWidth: "60%",
+                borderRadiusApplication: "end",
+                borderRadius: 6,
+                dataLabels: {
+                    position: "top",
+                },
+            },
+        },
+        legend: {
+            show: true,
+            position: "bottom",
+        },
+        dataLabels: {
+            enabled: true,
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            formatter: function (value) {
+                return "$" + value
+            }
+        },
+        xaxis: {
+            labels: {
+                show: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                },
+                formatter: function (value) {
+                    return "$" + value
+                }
+            },
+            // categories: ["Jan","Feb","Mar","Apr","May","Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+            axisTicks: {
+                show: false,
+            },
+            axisBorder: {
+                show: true,
+            },
+        },
+        yaxis: {
+            labels: {
+                show: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                }
+            }
+        },
+        grid: {
+            show: true,
+            strokeDashArray: 4,
+            padding: {
+                left: 10,
+                right: 2,
+                top: -20
+            },
+            width: 3
+        },
+        fill: {
+            opacity: 1,
+        }
+    }
+    if (document.getElementById("bar-chart") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("bar-chart"), options);
+        chart.render();
+    }
+}
+
+function showBarChart() {
+    document.getElementById('total_exp').innerHTML = "$" + totalExpenses
+    var options = {
+        series: [
+            {
+                name: "Expense",
+                data: ["788", "810", "866", "788", "1100", "1200"],
+                color: "#F05252",
+            }
+        ],
+        chart: {
+            sparkline: {
+                enabled: false,
+            },
+            type: "bar",
+            width: "100%",
+            height: 400,
+            toolbar: {
+                show: false,
+            }
+        },
+        fill: {
+            opacity: 1,
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                vertical: true,
+                columnWidth: "30%",
+                borderRadiusApplication: "end",
+                borderRadius: 6,
+                dataLabels: {
+                    position: "top",
+                },
+            },
+        },
+        legend: {
+            show: true,
+            position: "bottom",
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            formatter: function (value) {
+                return "$" + value
+            }
+        },
+        xaxis: {
+            labels: {
+                show: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                },
+                formatter: function (value) {
+                    return "$" + value
+                }
+            },
+            categories: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            axisTicks: {
+                show: false,
+            },
+            axisBorder: {
+                show: false,
+            },
+        },
+        yaxis: {
+            labels: {
+                show: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                }
+            }
+        },
+        grid: {
+            show: true,
+            strokeDashArray: 4,
+            padding: {
+                left: 2,
+                right: 2,
+                top: -20
+            },
+        },
+        fill: {
+            opacity: 1,
+        }
+    }
+
+    if (document.getElementById("bar-chart") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("bar-chart"), options);
+        chart.render();
+    }
 }

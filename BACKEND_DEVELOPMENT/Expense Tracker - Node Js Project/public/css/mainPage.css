@@ -46,6 +46,10 @@ img {
     }
 }
 
+#leaderBoard{
+    pointer-events: none;
+}
+
 .modal-header {
     .close {
         margin-top: -1.5rem;

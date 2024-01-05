@@ -9,6 +9,7 @@ function isStringInvalid(string) {
 }
 
 exports.login = async (req, res) => {
+    console.log('enter in login');
     const { email, password } = req.body;
     let user = await User.findOne({ where: { email: email } })
     try {

@@ -6,7 +6,6 @@ const loginPassword = document.querySelector('#Password');
 const loginBtn = document.querySelector('#login');
 const resetPasswordBtn = document.querySelector('#resetPassword');
 const resetPasswordEmail = document.querySelector('#typeEmail')
-let errDiv = document.querySelector('#errMsg');
 let userNotExistErr = document.querySelector('#userNotExistErr');
 let passErr = document.querySelector('#login_pass_err');
 let forgotPassEmailErr = document.querySelector('#forgotPassEmail')
@@ -17,9 +16,8 @@ loginForm.addEventListener('submit', async (e) => {
         email: loginEmail.value,
         password: loginPassword.value
     };
-    if (!loginForm.checkValidity()) {
-        showError(errDiv, 'Please enter all required fields');
-    } else {
+    if(loginForm.checkValidity()){
+        console.log('worked fine');
         try {
             let response = await axios.post(`http://localhost:8001/user/login`, credentials);
             if (response.status === 200) {

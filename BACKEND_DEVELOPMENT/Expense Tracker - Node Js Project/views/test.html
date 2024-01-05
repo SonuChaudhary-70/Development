@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,85 +8,196 @@
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
+    <!-- Premium user Section and its features starts here -->
+    <span class="m-0 p-0 d-flex mt-2">
+        <h5 id="message" class="d-none">You are a premium user</h5>
+        <button class="btn btn-dark ms-2" id="buy_premium">Buy Premium</button>
+        <button class="btn btn-secondary ms-2 d-none" id="leaderBoard">Show Leaderboard</button>
+        <button class="btn btn-secondary ms-2 d-none" id="generateReport">Download Report</button>
+    </span>
+    <!-- Premium user Section and its features ends here -->
 
-    <div id="content">
-        <!-- Your content goes here, e.g., a list of items -->
-        <ul id="itemList">
-            <!-- Items will be dynamically added here -->
-        </ul>
+    <div class="container-fluid mt-3 p-0">
+        <div class="row d-flex justify-content-center mx-0">
+            <div class="col-lg-8 col-md-10 col-sm-12 bg-dark rounded border border-2 border-dark main">
+                <form class="p-2 needs-validation" id="form" novalidate>
+                    <!-- <span id="error" style="display:none"></span> -->
+                    <div class=" bg-danger mb-1 px-1 d-none rounded text-light fs-5" id="errMsg"></div>
+                    <div class="mb-3 position-relative form-outline">
+                        <label for="amount" class="form-label text-light">Amount :</label>
+                        <input type="number" class="form-control inp" id="amount" required>
+                        <div class="invalid-feedback" id="ampErr">
+                            Please provide a valid amount.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label text-light ls-widest">Description
+                            :</label>
+                        <input type="text" class="form-control inp" id="description" required>
+                        <div class="invalid-feedback" id="descErr">
+                            Please provide a valid description.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="expense-category" class="form-label text-light">Category :</label>
+                        <select name="Expense Category" id="expense-category"
+                            class="inp rounded rounded-2 p-1 py-2 w-100" required>
+                            <option value="">Please choose an option</option>
+                            <option value="Movie">Movie</option>
+                            <option value="Petrol">Petrol</option>
+                            <option value="Electricity">Electricity</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Food">Food</option>
+                            <option value="Kirana">Kirana</option>
+                            <option value="Outing">Outing</option>
+                        </select>
+                        <div class="invalid-feedback" id="categoryErr">
+                            Please provide a valid category.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="expense-date" class="form-label text-light">Date :</label>
+                        <input type="date" id="expense-date" required>
+                        <div class="invalid-feedback" id="categoryErr">
+                            Please select expense date.
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-warning "
+                            style="opacity: 1;letter-spacing: 2px; font-weight: 500" value="submit" id="add">ADD
+                            EXPENSE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Add Expense Detail Section ends here -->
+
+        <!-- Expense Table Section Start here -->
+        <div class="row my-4 d-flex justify-content-center mx-0">
+            <div class="col-lg-8 col-md-10 col-sm-12  border border-2 rounded">
+                <div class="table-responsive">
+                    <!-- Expense Table starts here -->
+                    <table class="table table-light table-hover rounded rounded-4">
+                        <!-- table description/info starts here -->
+                        <div class="d-flex justify-content-between">
+                            <h3 class="text-center fst-italic pt-3 text-black">
+                                Expense Table
+                            </h3>
+                        </div>
+                        <!-- table description/info ends here -->
+
+                        <!-- Table Header Starts here -->
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <!-- Table Header Ends here -->
+
+                        <!-- table body start here -->
+                        <tbody id="expTabBody">
+                        </tbody>
+                    </table>
+                    <!-- Expense Table Ends here -->
+
+                </div>
+            </div>
+        </div>
+        <!-- Expense Table Section Ends here -->
+
+        <!-- Leaderboard Section Starts Here  -->
+        <div class="row bg-dange my-4 d-none justify-content-center mx-0">
+            <div class="col-lg-8 col-md-10 col-sm-12  border border-2 rounded">
+                <!-- Leaderboard Table starts here -->
+                <div class="table-responsive">
+                    <table class="table table-light table-hover rounded rounded-4">
+                        <!-- table description/info starts here -->
+                        <div class="d-flex justify-content-between">
+                            <h3 class="text-center fst-italic pt-3 text-black">
+                                Leaderboard
+                            </h3>
+                        </div>
+                        <!-- table description/info ends here -->
+
+                        <!-- Table Header Starts here -->
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Total Expense</th>
+                            </tr>
+                        </thead>
+                        <!-- Table Header Ends here -->
+
+                        <!-- table body start here -->
+                        <tbody id="leaderTabBody">
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Leaderboard Table Ends here -->
+            </div>
+        </div>
     </div>
-
-    <!-- Bootstrap Pagination Component -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center" id="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" id="previousBtn">Previous</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#" id="currentBtn">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#" id="nextBtn">Next</a>
-            </li>
-        </ul>
-    </nav>
 
     <!-- Include Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
-    <script>
-        const itemsPerPage = 5;
-        let currentPage = 1;
-
-        // Sample data (replace this with your actual data)
-        const items = Array.from({ length: 50 }, (_, i) => `Item ${i + 1}`);
-
-        function displayItems(page) {
-            const startIndex = (page - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const displayedItems = items.slice(startIndex, endIndex);
-
-            const itemList = document.getElementById('itemList');
-            itemList.innerHTML = '';
-
-            displayedItems.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                itemList.appendChild(li);
-            });
-        }
-
-        function updateCurrentButton() {
-            const currentBtn = document.getElementById('currentBtn');
-            currentBtn.textContent = currentPage.toString();
-        }
-
-        function setupPagination() {
-            const previousBtn = document.getElementById('previousBtn');
-            const nextBtn = document.getElementById('nextBtn');
-
-            previousBtn.addEventListener('click', function () {
-                if (currentPage > 1) {
-                    currentPage--;
-                    updateCurrentButton();
-                    displayItems(currentPage);
-                }
-            });
-
-            nextBtn.addEventListener('click', function () {
-                currentPage++;
-                updateCurrentButton();
-                displayItems(currentPage);
-            });
-        }
-
-        // Initial setup
-        displayItems(currentPage);
-        updateCurrentButton();
-        setupPagination();
-    </script>
 
 </body>
+
 </html>
+
+
+
+
+
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    S.No
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    UserName
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Total Expense
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    1
+                </th>
+                <td class="px-6 py-4">
+                    Harry
+                </td>
+                <td class="px-6 py-4">
+                    2500
+                </td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    1
+                </th>
+                <td class="px-6 py-4">
+                    Sonu
+                </td>
+                <td class="px-6 py-4">
+                    2000
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
