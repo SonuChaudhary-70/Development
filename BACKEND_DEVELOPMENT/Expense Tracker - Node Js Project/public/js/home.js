@@ -101,19 +101,19 @@ async function editData(e) {
     if (e.target.classList.contains('edit')) {
         if (e.target.innerHTML == 'Edit') {
             // focus on first input elements
-            const addModal = document.getElementById('add_expense_modal')
-            const targetBtn = document.getElementById(e.target.id);
+            // const addModal = document.getElementById('add_expense_modal')
+            // const targetBtn = document.getElementById(e.target.id);
             // const targetModal = new modal('#addModal');
-            $(document).ready(function () {
+            // $(document).ready(function () {
                 // Get the modal element
-                var modal = $('#add_expense_modal');
+                // var modal = $('#add_expense_modal');
                 // Add a click event listener to the button
-                $(targetBtn).click(function () {
-                    console.log('enter');
+                // $(targetBtn).click(function () {
+                    // console.log('enter');
                     // Show the modal
-                    modal.modal('show');
-                });
-            });
+                    // modal.modal('show');
+                // });
+            // });
             // get expense data from DB and fill all input field with the expense
             let savedExp = await axios.get(`http://localhost:8001/expense/get-expense/${e.target.id}`, { headers: { 'Authorization': token } });
             try {
@@ -206,10 +206,6 @@ async function showLeaderBoard() {
         <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${index + 1}</th>
         <td class="px-6 py-3 text-gray-900">${exp.User.username}</td>
         <td class="px-6 py-3 text-gray-900">${exp.total_amount}</td>`
-        const html = `
-        <td>1</td>
-        <td>${exp.User.username}</td>
-        <td>${exp.total_amount}</td>`
         tr.innerHTML = html2;
         leaderTableBody.appendChild(tr)
     })
@@ -344,113 +340,9 @@ function showData() {
     analysisTarget.classList.replace('d-flex','d-none');
 }
 
-function showBarChart1() {
-    console.log('total :', totalExpenses);
-    var options = {
-        series: [
-            // {
-            //     name: "Income",
-            //     color: "#31C48D",
-            //     data: ["1420", "1620", "1820", "1420", "1650", "2120","3000"],
-            // },
-            {
-                name: "Expense",
-                data: ["788", "810", "741", "788", "1100", "1200", "1452"],
-                color: "#F05252",
-            }
-        ],
-        chart: {
-            sparkline: {
-                enabled: false,
-            },
-            type: "bar",
-            width: "50%",
-            height: 'auto',
-            toolbar: {
-                show: false,
-            },
-        },
-        fill: {
-            opacity: 1,
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                vertical: true,
-                columnWidth: "60%",
-                borderRadiusApplication: "end",
-                borderRadius: 6,
-                dataLabels: {
-                    position: "top",
-                },
-            },
-        },
-        legend: {
-            show: true,
-            position: "bottom",
-        },
-        dataLabels: {
-            enabled: true,
-        },
-        tooltip: {
-            shared: true,
-            intersect: false,
-            formatter: function (value) {
-                return "$" + value
-            }
-        },
-        xaxis: {
-            labels: {
-                show: true,
-                style: {
-                    fontFamily: "Inter, sans-serif",
-                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
-                },
-                formatter: function (value) {
-                    return "$" + value
-                }
-            },
-            // categories: ["Jan","Feb","Mar","Apr","May","Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-            axisTicks: {
-                show: false,
-            },
-            axisBorder: {
-                show: true,
-            },
-        },
-        yaxis: {
-            labels: {
-                show: true,
-                style: {
-                    fontFamily: "Inter, sans-serif",
-                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
-                }
-            }
-        },
-        grid: {
-            show: true,
-            strokeDashArray: 4,
-            padding: {
-                left: 10,
-                right: 2,
-                top: -20
-            },
-            width: 3
-        },
-        fill: {
-            opacity: 1,
-        }
-    }
-    if (document.getElementById("bar-chart") && typeof ApexCharts !== 'undefined') {
-        const chart = new ApexCharts(document.getElementById("bar-chart"), options);
-        chart.render();
-    }
-}
-
 function showBarChart() {
     document.getElementById('total_exp').innerHTML = "$" + totalExpenses
-    var options = {
+    let options = {
         series: [
             {
                 name: "Expense",

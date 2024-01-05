@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
 const bodyParser = require('body-parser');
 const sequelize = require('./util/dbConfig');
 const User = require('./model/user');
@@ -16,7 +18,7 @@ const purchaseRoutes = require('./routes/purchase');
 const userAuthentication = require('./middleware/authentication');
 require('dotenv').config()
 
-// DEFINE ASSoCIATIONs BETWEEN MODELS
+// DEFINE ASSOCIATIONs BETWEEN MODELS
 // user and expenses associations ( 1:M ) => ( user: Expenses )
 User.hasMany(Expenses)
 Expenses.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
@@ -31,6 +33,15 @@ ForgotPasswordReq.belongsTo(User,{ constraint: true, onDelete: "CASCADE" });
 
 // middleware which are used for all routes
 app.use(cors());
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives:{
+            "script-src":["'self'","https://cdn.tailwindcss.com","https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js","https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js","https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js","https://checkout.razorpay.com/v1/checkout.js","https://code.jquery.com/jquery-3.5.1.min.js","https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js","https://cdn.jsdelivr.net/npm/apexcharts"],
+            "default-src":["'self'","*"]
+        }
+    }
+}));
+app.use(compression());
 app.use(bodyParser.json());
 app.use(express.static('public'))
 
