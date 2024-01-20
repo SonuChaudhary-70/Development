@@ -49,6 +49,7 @@ exports.getExpenseById = async (req, res) => {
 }
 
 exports.updateExpense = async (req, res) => {
+    console.log('update route works');
     let Id = req.params.id;
     let { Expense_Amount, Description, Category, date } = req.body;
     console.log(req.body);
@@ -98,45 +99,4 @@ exports.getLimitedExpense = async (req, res) => {
     catch(err){
         res.status(401).json({ success: false, Error:err})
     }
-}
-
-// my logic for pagination
-async function pagination() {
-    console.log('page number : ', req.query.page);
-    let page = req.query.page < 1 ? 1 : req.query.page;
-    const limitedExp = await Expense.findAll({
-        // where: { id: { [Op.between]: [page, ++page] } }
-        where: { id: { [Op.between]: [page, ++page] } }
-    });
-    let hasPrevPage
-    let hasNextPage
-    let currPage
-    let nextPage
-    let prevPage
-    console.log(page - 1);
-    if (limitedExp.length == 0 && page - 1 < 2) {
-        console.log('no expense');
-        hasPrevPage = false;
-        hasNextPage = false;
-    } else if (limitedExp.length < 2 || limitedExp.length == 0) {
-        hasNextPage = false;
-    } else {
-        hasPrevPage = limitedExp[0].id != 1 || limitedExp.length == 0
-        hasNextPage = limitedExp.length == 2
-        currPage = page - 1;
-        nextPage = currPage + 1;
-        prevPage = currPage - 1;
-        console.log('prev', prevPage);
-        console.log('curr', currPage);
-        console.log('next', nextPage);
-    }
-    res.status(200).json({
-        success: true,
-        expense: limitedExp,
-        hasPrevPage,
-        hasNextPage,
-        currPage,
-        nextPage,
-        prevPage
-    })
 }

@@ -29,15 +29,15 @@ Orders.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
 
 // user and ForgotPasswordRequests association
 User.hasMany(ForgotPasswordReq);
-ForgotPasswordReq.belongsTo(User,{ constraint: true, onDelete: "CASCADE" });
+ForgotPasswordReq.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
 
 // middleware which are used for all routes
 app.use(cors());
 app.use(helmet({
     contentSecurityPolicy: {
-        directives:{
-            "script-src":["'self'","https://cdn.tailwindcss.com","https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js","https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js","https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js","https://checkout.razorpay.com/v1/checkout.js","https://code.jquery.com/jquery-3.5.1.min.js","https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js","https://cdn.jsdelivr.net/npm/apexcharts"],
-            "default-src":["'self'","*"]
+        directives: {
+            "script-src": ["'self'", "https://cdn.tailwindcss.com", "https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js", "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js", "https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js", "https://checkout.razorpay.com/v1/checkout.js", "https://code.jquery.com/jquery-3.5.1.min.js", "https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js", "https://cdn.jsdelivr.net/npm/apexcharts", "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"],
+            "default-src": ["'self'", "*"]
         }
     }
 }));
