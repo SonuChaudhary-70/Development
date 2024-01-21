@@ -3,3 +3,72 @@ we use password hashing.
 
 Bcrypt algorithm is based on Blowfish algorithm.
 
+Used packages - 
+helmet
+logging
+compression
+
+INTERVIEW QUESTIONS 
+What is SSL and how does it work exactly? [Favourite Interview Question]
+Ans - SSL stands for Socket Secure Layer.
+It secure the connection between web browser/client and server.
+It encrypt and decrypt the sensitive data between client and server.
+It uses private and public key to encrypt and decrypt the data and it attach these keys in request headers
+It prevents the user data from fraudsters and hackers who put an eye on data in between the sending the data from the browser and receiving the data to the server.
+
+Working of SSL - When user open any secured ssl certified website then SSL starts its work by sending public key to client/browser and if client found secure then server sends its public key to the browser to connect with the browser and make it secure. 
+After that when user send any sensitive data to the server then before sending the data ssl encrypt the data and generates private key, ssl layer and attach it with request headers and sent to the server. 
+After receiving request the server first remove ssl layer then check private key sent by browser and then decrypt the data.
+
+Q - How does heroku exactly work?.
+Ans  - Heroku is Paas used to deploy your project. It is hosting provider.
+if we run our project on our local machine then our local machine works as a server which process the incoming request from the user and send back the response to them. 
+But as our app grows its hard to handle huge requests so Herkou provides a platform on which our projects runs. 
+Heroku and other hosting providers has large data centers that have large no of machine like our local host or computer. 
+When we use heroku it gives a part of these machines know as virtual server. 
+when we deploy our project on heroku it add its server with our project server to provide some extra features like security,scalability etc. 
+so when any request comes then it goes to heroku server then our server and sent response to user. 
+we don't expose our code to all but our hosting provide knows our project code.
+
+
+Why is git called version controller?
+Ans - Git is called version controller because it keeps and maintains the version of our project in development as well as in production. 
+Version of code means a snapshot of our code at that point of time when the code is pushed.
+So if you want to go back to previous state, you can do so by going through versions.
+
+
+What is commit, branch and remote?
+Ans - commit means taking a snapshot of the code at particular point of time. 
+when we develop project or do some modifications to the code after that we take snapshots of the code or commit the changes to git which keeps the version of the code in development.
+we can also rollback the recent commit or any previous commit if we want.
+
+branch is like different paths and folder in git where we can keep our changes separate from main path(master).
+If we make change in master then those changes will reflect in other branches too because they are pointing towards the main branch.
+it helps us to try new things or add new features without affecting the main code base.
+if we are working on some feature then we create a new branch for this feature development and once done with the task we merge the code into master branch.
+
+remote having the branch or our code available on cloud and can access our project from anywhere and anytime.
+if we want to work on our project and we doesn't have our project available on our machine then with the help of remote repo we can access our project from any machine.
+
+
+What does .gitignore file do?Why is it important?
+The .gitignore file specifies intentionally untracked files that Git should ignore. It means that don't include files to upload to the git that are not useful or that have sensitive data.
+It is very important to have a .gitignore file because sometimes our project have some heavy data and some sensitive data that we don't want any other to show. so we don't want to upload it on git.
+then by adding a .gitignore file in our project and specifies files and folders in gitignore file then those files and folders will not be upload to the git.
+
+
+Why don't we push node module to git?
+->Node module is heavy files or we can say that the size of the node module is huge which makes our project heavy and creates difficulties during deployment.
+->These files have code or functions written by someone other to make the development of the project easy. so these files are available on web so no need to push on git
+
+What is Server?
+Server is an application program that runs on a computer to respond to requests for information from users over the 
+
+What happens when we restart the server?
+-> when we restart the server the project compiled and executes the code and the functions start processing and server is running in the background.
+
+What are environment variables and what should we use it for?
+What all thing should you do to prepare code for production?Explain each one of them and why we need it?
+Why should we put the port number and mongodb connection string in env variable?
+What is process variable?What does process.env do?
+What are the key security things which helmet provides. Can you explain a few?

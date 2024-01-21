@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
         if (!isValidUser) {
             return res.status(401).json({ success: false, message: 'Password not correct' })
         }
-        const loginToken = jwt.sign({ id: user.id, name: user.username, email: user.email, isPremiumUser: user.isPremiumMember }, process.env.SECRET_KEY, { expiresIn: '365d' });
+        const loginToken = jwt.sign({ id: user.id, name: user.username, email: user.email, isPremiumUser: user.isPremiumMember }, process.env.JWT_SECRET_KEY, { expiresIn: '365d' });
         return res.status(200).json({ success: true, message: "User logged in successfully", authorized: true, token: loginToken });
     }
     catch (error) {
@@ -41,12 +41,12 @@ exports.signUp = async (req, res) => {
         if (!user) {
             let hashedPassword = await bcrypt.hash(password, saltRounds)
             if (!hashedPassword) throw new Error('Error while hashing a password')
-            const user = await User.create({
+            await User.create({
                 username: username,
                 email: email,
                 password: hashedPassword
             });
-            // const signUpToken = jwt.sign({ new_user:user }, process.env.SECRET_KEY, { expiresIn: '365d' })
+            // const signUpToken = jwt.sign({ new_user:user }, process.env.JWT_SECRET_KEY, { expiresIn: '365d' })
             return res.status(200).json({ success: true, message: "User created successfully"});
         } else {
             return res.status(409).json({ success: false, message: "Email already exists" });

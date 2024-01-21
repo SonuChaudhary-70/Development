@@ -1,6 +1,6 @@
 const Order = require('../model/order');
 require('dotenv').config();
-const secret_Key = process.env.SECRET_KEY
+const secret_Key = process.env.JWT_SECRET_KEY
 const jwt = require('jsonwebtoken');
 const Razorpay = require('razorpay');
 
