@@ -1,0 +1,49 @@
+Ques.1 - What advantage does typescript gives us?Explain with example?
+Typescript is a superset of Javascript which adds optional static typing to the language. It allows developers to catch errors early in the development cycle, making it easier for them to fix issues.
+It adds some extra features in js code
+it will add data type in a variable, func, argument, parameters etc.
+
+Ques.2 - What does typescript add to javascript?Explain each of them in your own words.
+It will add data type in variable
+we can use non-js features like interfaces or generices
+It gives access to use modern tools and techniques we can used in our code.
+By adding data type with variables ts compiler can check type of data during compile time which will tell if any error in our code before runtime
+
+Ques.3 - Why do we need typescript compiler?
+Ans - It will compile typescript code and also convert typescript to js code to run on browser.
+
+Ques.4 - What happens when you compile?
+Ans- When we compile typescript code and convert typescript to js code to run on browser using the typescript compiler, it checks for any errors in the code if there are no errors then
+ts file is converted into js which will execute in the browser.
+
+
+Ques.5 - What are the different types available in typescript?
+Ans - number - 1, 5 , 2.5, -10
+string - "hello", 'world', `hey`
+boolean - true, false
+object - {name, value}
+array - [1, 2, 3]
+
+
+Ques.6 - Why does add('1', '2') start showing error when the trainer has defined types?
+Ans - as we define data type number to variable num1 and num2 so add function will only get number data type and we are giving string data type that's why it is giving error
+
+Ques.7 - What do you mean typescript can infer the types? What is the advantage of this?
+Ans - type inference is a feature of the typescript that allows compiler to deduce the type of the variable, argument and function call based on its context or type of data we provide to the variable.
+type inference can save time and effort, as we don't have to explicitly define data type of the variable. 
+
+Ques.8 - What is the problem with type inference sometime and how do you solve with type casting?
+Ans - some time type inference doesn't deduce the type of the variable, argument and function call based on its context or data that we provide. In this case
+we define data type of the variable, argument , expression explicitly which is known as typecasting.
+
+Ques.1 - What does tsc init do?
+Ques.1 - What does strict mode do?
+Ques.1 - What does buttonElement ! exactly do ? Why do we put EXCLAMATION MARK( ! ).
+Ques.1 - Why should not we use any type?
+Ques.1 - How we handle objects?
+Ques.1 - How do we handle arrays?
+Ques.1 - What does type keyword do?
+Ques.1 - Interface are more frequently used than types. What do you think is the advantage of interfaces?
+Ques.1 - How is an array a generic as per the trainer?
+Ques.1 - Why do we need to change the target to es6?
+Ques.1 - How does generics work with promises.
