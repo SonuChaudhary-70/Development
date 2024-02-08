@@ -5,7 +5,7 @@ it will add data type in a variable, func, argument, parameters etc.
 
 Ques.2 - What does typescript add to javascript?Explain each of them in your own words.
 It will add data type in variable
-we can use non-js features like interfaces or generices
+we can use non-js features like interfaces or generics
 It gives access to use modern tools and techniques we can used in our code.
 By adding data type with variables ts compiler can check type of data during compile time which will tell if any error in our code before runtime
 
@@ -36,14 +36,41 @@ Ques.8 - What is the problem with type inference sometime and how do you solve w
 Ans - some time type inference doesn't deduce the type of the variable, argument and function call based on its context or data that we provide. In this case
 we define data type of the variable, argument , expression explicitly which is known as typecasting.
 
-Ques.1 - What does tsc init do?
-Ques.1 - What does strict mode do?
-Ques.1 - What does buttonElement ! exactly do ? Why do we put EXCLAMATION MARK( ! ).
-Ques.1 - Why should not we use any type?
-Ques.1 - How we handle objects?
-Ques.1 - How do we handle arrays?
+Ques.9 - What does tsc init do?
+Ans - It will create a typescript configuration file that contains all the configuration for compiling TypeScript files in which we modify or do some configuration  which will follow rules that we define in config file.
+
+Ques.10 - What does strict mode do?
+Ans - It will use strict mode by default if we not mention anything about it. Strict mode makes sure that all variables must be declared before they access.
+It add some extra null checker which will ensure that nothing will add(like add events) to null values or don't use null values in other functions or expressions
+In strict mode typescript does not check our html code by which some general features of html doesn't work.
+
+Ques.11 - What does buttonElement ! exactly do ? Why do we put EXCLAMATION MARK( ! ).
+Ans - buttonElement! refers to an element that definitely exists. TypeScript uses the exclamation mark (!) operator for null assertion. This means it tells TypeScript that the object cannot be null/undefined
+The exclamation mark ( ! ) after a type definition means that the TypeScript Compiler should 
+assume that the given type is always provided, even if it cannot verify that at compile-time
+because the JavaScript code may be too complex for TypeScript to understand.
+It will tell the typescript compiler that the variable we use is not null.
+
+Ques.12 - Why should not we use any type?
+Because any type means that the variable can hold any type of data., using any type tells TypeScript that we want to ignore all type checking for that particular variable. This defeats one of the main reasons why people choose to use TypeScript: to catch errors
+
+Ques.13 - How we handle objects?
+We can create an interface or class to represent object structure.
+Ques.14 - How do we handle arrays?
 Ques.1 - What does type keyword do?
-Ques.1 - Interface are more frequently used than types. What do you think is the advantage of interfaces?
-Ques.1 - How is an array a generic as per the trainer?
-Ques.1 - Why do we need to change the target to es6?
-Ques.1 - How does generics work with promises.
+Ques.15 - Interface are more frequently used than types. What do you think is the advantage of interfaces?
+Ques.16 - How is an array a generic as per the trainer?
+Ques.17 - Why do we need to change the target to es6?
+Ques.18 - How does generics work with promises.
+Ques.19- Why do we need to install types/node? What does it do?
+Ques.20- Why do we need to install types/express? What does it do?
+Ques.21- What is the need for changing moduleresolution to es6?
+Ques.21- Import keyword is very similar to require keyword. What do you think?
+Ques.21- How to use import keyword?
+Ques.21- How does import { Router } from 'express'. work. What does { } this do?
+Ques.21- What do you mean by interface?Why do we have to create it for todos type?
+Ques.21- What are named exports and default exports?
+Ques.22- What is type casting
+Ques.22- What is the need of RequestBody and RequestParams?
+Ques.22- Why do we have to change the rootDir to './src'?
+Ques.22- Why do we add node dist/app.js in package.json ? What does it exactly do?
