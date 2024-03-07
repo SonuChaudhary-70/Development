@@ -65,12 +65,21 @@ Ques.18 - How does generics work with promises.
 Ques.19- Why do we need to install types/node? What does it do?
 Ques.20- Why do we need to install types/express? What does it do?
 Ques.21- What is the need for changing moduleresolution to es6?
-Ques.21- Import keyword is very similar to require keyword. What do you think?
-Ques.21- How to use import keyword?
-Ques.21- How does import { Router } from 'express'. work. What does { } this do?
-Ques.21- What do you mean by interface?Why do we have to create it for todos type?
-Ques.21- What are named exports and default exports?
-Ques.22- What is type casting
-Ques.22- What is the need of RequestBody and RequestParams?
-Ques.22- Why do we have to change the rootDir to './src'?
-Ques.22- Why do we add node dist/app.js in package.json ? What does it exactly do?
+Ques.22- Import keyword is very similar to require keyword. What do you think?
+Ques.23- How to use import keyword?
+Ques.24- How does import { Router } from 'express'. work. What does { } this do?
+Ques.25- What do you mean by interface?Why do we have to create it for todos type?
+Ques.26- What are named exports and default exports?
+Ques.27- What is type casting
+Ques.28- What is the need of RequestBody and RequestParams?
+Ques.29- Why do we have to change the rootDir to './src'?
+Ques.30- Why do we add node dist/app.js in package.json ? What does it exactly do?
+
+System Design Questions
+Ques.31- What is vertical Scaling and Horizontal Scaling.
+Ques.32- Which one would you prefer and why?
+Ques.33- What are the antipatterns you should avoid with Database?Why is it so?
+Ques.34- What is the solution to the antipattern?
+Ques.35- What is Microservice architecture
+Ques.36- What is Monolitth Architecture?
+Ques.37- What is the difference between Microservice and Monolith architecture 

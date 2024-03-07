@@ -1,0 +1,11 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "It is a web application for group chat app",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "author": "Sonu Chaudhary",
+  "license": "ISC"
+}

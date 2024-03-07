@@ -72,3 +72,5 @@ What all thing should you do to prepare code for production?Explain each one of 
 Why should we put the port number and mongodb connection string in env variable?
 What is process variable?What does process.env do?
 What are the key security things which helmet provides. Can you explain a few?
+What is pm2 and how to use it
+What is nginx and how to use it, http caching, load balancing ,reverse proxy
