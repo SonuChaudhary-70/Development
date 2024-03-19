@@ -8,6 +8,7 @@ router.get('/sign-up', (req, res) => {
     res.sendFile('signup.html', { root: 'views' });
 })
 
-router.post('/sign-up/add-user',signUp)
+router.post('/sign-up/add-user', signUp);
+// router.post('/sign-up/duplicate-user', signUp)
 
 export default router;

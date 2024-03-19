@@ -13,14 +13,17 @@ app.use(mainPageRoutes)
 app.use('/user', userRoutes)
 
 const startServer = async () => {
-    // const dbConnected = await sequelize.sync();
-    const dbConnected = await sequelize.sync({force: true});
+    const dbConnected = await sequelize.sync();
+    // const dbConnected = await sequelize.sync({force: true});
     try {
+        if (!dbConnected) {
+            throw new Error('Error while Db Connection')
+        }
         app.listen(process.env.PORT, () => {
             console.log('server is listening request on port :', process.env.PORT);
         })
     } catch (err) {
-        console.log('error :', err);
+        console.log('Error while creating a server :', err);
     }
 }
 startServer()

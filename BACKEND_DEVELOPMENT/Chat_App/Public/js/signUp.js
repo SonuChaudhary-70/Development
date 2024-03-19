@@ -17,7 +17,11 @@ signUpForm.addEventListener('submit', async (e) => {
 	if (credentials.username == '' || credentials.phone_num == '' || credentials.email == '' || credentials.password == '') {
 		console.log('empty');
 	} else {
-		const signUpResponse = await axios.post('http://localhost:6508/user/sign-up/add-user', credentials);
-		console.log('sign up response:', signUpResponse);
+		try{
+			const signUpResponse = await axios.post('http://localhost:6508/user/sign-up/add-user', credentials);
+			console.log('sign up response:', signUpResponse);
+		}catch(err){
+			console.log('Error while sign up :',err.response.data.error);
+		}
 	}
-})
+})	
